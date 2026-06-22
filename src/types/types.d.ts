@@ -97,3 +97,43 @@ export interface IntegrationItem {
 export interface IntegrationsProps extends HeadlineProps {
   integrations?: IntegrationItem[];
 }
+
+export interface StatItem {
+  title: string;
+  amount: string;
+  icon?: string;
+}
+
+export interface StatsProps extends HeadlineProps {
+  stats?: StatItem[];
+}
+
+export interface Testimonial {
+  name: string;
+  role: string;
+  image?: string;
+  testimonial: string;
+  company?: string;
+}
+
+export interface TestimonialsProps extends HeadlineProps {
+  testimonials?: Testimonial[];
+}
+
+export interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+export interface FAQProps extends HeadlineProps {
+  items?: FAQItem[];
+}
+
+export interface CallToActionWidgetProps extends Widget {
+  title?: string;
+  subtitle?: string;
+  tagline?: string;
+  callToAction?: CallToAction;
+  callToAction2?: CallToAction;
+  actions?: string | CallToAction[];
+}
