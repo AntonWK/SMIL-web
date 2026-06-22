@@ -27,7 +27,6 @@ export const siteConfig = {
       text: "Templates",
       href: "/templates",
       links: [
-        { text: "All Templates", href: "/templates" },
         { text: "Personal Portfolio", href: "/templates/portfolio" },
         { text: "SaaS Landing", href: "/templates/saas" },
       ],
