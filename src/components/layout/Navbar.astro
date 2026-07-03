@@ -1,32 +1,35 @@
 ---
 import { siteConfig } from "@/config/site";
 import ThemeToggle from "@/components/ui/ThemeToggle.astro";
+
+const currentPath = Astro.url.pathname;
+
+import { Image } from "astro:assets";
+import smilLogo from "@/assets/smil-logga.png";
 ---
 
 <nav
-  class="fixed top-0 z-50 w-full border-b border-border bg-background md:bg-background/50 md:backdrop-blur"
+  class="fixed top-0 z-50 w-full border-b border-border bg-background md:bg-background/65 md:backdrop-blur"
 >
   <div
-    class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8"
+    class="mx-auto flex items-center justify-between px-4 py-8 sm:px-6 lg:px-10"
   >
+    <!-- max-w-7xl -->
     <div class="flex items-center gap-2">
-      <a
-        href="/"
-        class="text-xl font-bold tracking-tight text-foreground transition-colors hover:text-primary"
-      >
-        {siteConfig.name}
+      <a href="/" class="<a href=/" class="transition-opacity hover:opacity-80">
+        <Image src={smilLogo} alt="SMIL Logotyp" height={30} />
       </a>
     </div>
 
     <!-- Desktop Menu -->
     <div class="hidden md:block">
-      <div class="ml-10 flex items-baseline space-x-8">
+      <div class="ml-10 flex items-baseline space-x-6">
         {
           siteConfig.navLinks.map((link) => {
             if ("links" in link && Array.isArray(link.links)) {
               return (
                 <div class="relative group">
-                  <button class="flex items-center gap-1 text-sm font-medium text-foreground transition-colors hover:text-primary focus:outline-none cursor-pointer">
+                  <button class="flex items-center gap-1 text-lg font-medium text-foreground transition-colors hover:text-primary focus:outline-none cursor-pointer">
                     {link.text}
                     <svg
                       class="h-4 w-4 transition-transform group-hover:rotate-180"
@@ -60,7 +63,7 @@ import ThemeToggle from "@/components/ui/ThemeToggle.astro";
             return (
               <a
                 href={link.href}
-                class="text-sm font-medium text-foreground transition-colors hover:text-primary"
+                class={`text-lg font-medium ${currentPath === link.href ? "underline decoration-primary decoration-2 underline-offset-8" : ""} foreground transition-colors hover:text-primary`}
               >
                 {link.text}
               </a>
@@ -70,7 +73,8 @@ import ThemeToggle from "@/components/ui/ThemeToggle.astro";
       </div>
     </div>
 
-    <div class="hidden md:flex items-center gap-4">
+    <!-- <div class="hidden md:flex items-center gap-4">
+     Github länk
       <a
         href={siteConfig.socialLinks.github}
         target="_blank"
@@ -78,9 +82,9 @@ import ThemeToggle from "@/components/ui/ThemeToggle.astro";
         class="rounded-full bg-foreground/10 px-4 py-2 text-sm font-semibold text-foreground transition-all hover:bg-foreground/20"
       >
         GitHub
-      </a>
-      <ThemeToggle />
-    </div>
+      </a> -->
+    <!-- <ThemeToggle /> -->
+    <!-- </div> -->
 
     <!-- Mobile Menu Button -->
     <div class="md:hidden flex items-center">
@@ -123,9 +127,9 @@ import ThemeToggle from "@/components/ui/ThemeToggle.astro";
             d="M6 18L18 6M6 6l12 12"></path>
         </svg>
       </button>
-      <div class="ml-2">
+      <!-- <div class="ml-2">
         <ThemeToggle />
-      </div>
+      </div> -->
     </div>
   </div>
 
@@ -164,12 +168,12 @@ import ThemeToggle from "@/components/ui/ThemeToggle.astro";
           );
         })
       }
-      <a
+      <!-- <a
         href={siteConfig.socialLinks.github}
         target="_blank"
         class="block rounded-md px-3 py-2 text-base font-medium text-blue-400 transition-colors hover:cursor-pointer hover:bg-blue-500/10 hover:text-blue-300"
         >GitHub</a
-      >
+      > -->
     </div>
   </div>
 </nav>
