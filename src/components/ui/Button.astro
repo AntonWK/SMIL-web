@@ -24,8 +24,9 @@ const baseStyles =
 
 const variants = {
   primary:
-    "bg-foreground text-background hover:bg-foreground/90 transform hover:scale-105 shadow-lg shadow-primary/20",
-  secondary: "bg-muted text-foreground border border-border hover:bg-muted/80",
+    "bg-primary text-foreground hover:bg-primary/90 hover:text-background transform hover:scale-105 shadow-lg shadow-primary/20",
+  secondary:
+    "bg-background text-foreground border border-primary hover:scale-105 hover:bg-muted/80 hover:text-primary",
   tertiary:
     "bg-transparent text-foreground hover:bg-accent hover:text-accent-foreground",
 };

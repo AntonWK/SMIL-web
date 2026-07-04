@@ -3,136 +3,104 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import { siteConfig } from "@/config/site";
 import Hero from "@/components/widgets/Hero.astro";
 import Features from "@/components/widgets/Features.astro";
-import devImg from "@/assets/images/dev_balanced.png";
 import openSourceImg from "@/assets/images/open-source.png";
 import Content2 from "@/components/widgets/Content2.astro";
 import Github from "@/components/widgets/Github.astro";
 import Integrations from "@/components/widgets/Integrations.astro";
 const metadata = {
-  title: `${siteConfig.name} — The next step for your project`,
-  description:
-    "A modern and professional template for your web projects with Astro and Tailwind CSS. Boost your development with a solid foundation.",
+  title: `${siteConfig.name} — Nätverk och företagsutveckling i Linköping`,
+  description: siteConfig.description,
   ignoreTitleTemplate: true,
 };
+
+import { Image } from "astro:assets";
+import smilBanner from "@/assets/images/smil-banner-utvp.png";
+import smilLogo from "@/assets/smil-logga.png";
+import smil40 from "@/assets/smil-40.png";
 ---
 
 <BaseLayout {metadata}>
   <Hero
-    title={`Starter Template for <br class="hidden md:block" /> <span class="bg-linear-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">Web Developers</span>`}
-    tagline="Astro v5 + Tailwind v4"
+    title={`VÄLKOMMEN TILL SMIL <br class="hidden md:block" /> <span class="bg-linear-to-r bg-primary bg-clip-text text-transparent">Linköpings nätverk för företagsledare och entreprenörer</span>`}
+    tagline=""
     description={`${siteConfig.description}`}
     actions={[
       {
-        text: "Get Started",
-        href: "https://github.com/devgelo-labs/astro-starter-pro",
-        variant: "primary",
-        icon: "lucide:github",
+        text: "Om SMIL",
+        href: "/om-smil",
+        variant: "secondary",
+        icon: "lucide:smile",
+        ariaLabel: "Om SMIL - Information om oss",
       },
       {
-        text: "Our Services",
-        href: "/services",
-        variant: "secondary",
-        icon: "lucide:arrow-right",
-        ariaLabel: "Learn more about our services",
+        text: "Bli medlem idag!",
+        href: "/bli-medlem",
+        variant: "primary",
+        icon: "lucide:user-plus",
+        ariaLabel: "Bli medlem idag! - Länk till medlemskapsformulär",
       },
     ]}
   />
   <Features
-    tagline="Features"
-    title="What's Included"
-    subtitle="A selection of tools and configurations to streamline your workflow."
+    tagline="Väx med SMIL"
+    title="Vårt erbjudande"
+    subtitle="SMIL erbjuder flertal möjligheter för företag att utväcklas oavsätt storlek!"
     features={[
       {
-        title: "Optimized SEO",
+        title: "Evenemang",
         description:
           "Base configuration for Meta tags, Open Graph, and Sitemap generation.",
-        icon: "lucide:scan-search",
-        iconClass: "bg-blue-500/10 text-blue-400",
+        icon: "lucide:calendar-days",
+        iconClass: "bg-primary/10 text-primary",
       },
       {
-        title: "High Performance",
+        title: "Utbildningsprogram",
         description: "Lightweight structure for fast load times.",
-        icon: "lucide:zap",
-        iconClass: "bg-purple-500/10 text-purple-400",
+        icon: "lucide:book-open",
+        iconClass: "bg-primary/10 text-primary",
       },
       {
-        title: "Tailwind v4",
+        title: "Nätvärkande med liksinta företagsledare",
         description:
           "Integrated configuration with the latest version of Tailwind CSS.",
-        icon: "lucide:palette",
-        iconClass: "bg-pink-500/10 text-pink-400",
+        icon: "lucide:network",
+        iconClass: "bg-primary/10 text-primary",
       },
     ]}
   />
-  <Content2
-    items={[
-      {
-        title: "Responsive Design",
-        description:
-          "Base configuration for Meta tags, Open Graph, and Sitemap generation.",
-        icon: "lucide:scan-search",
-        iconClass: "bg-blue-500/10 text-blue-400",
-      },
-      {
-        title: "High Performance",
-        description: "Lightweight structure for fast load times.",
-        icon: "lucide:zap",
-        iconClass: "bg-purple-500/10 text-purple-400",
-      },
-      {
-        title: "Tailwind v4",
-        description:
-          "Integrated configuration with the latest version of Tailwind CSS.",
-        icon: "lucide:palette",
-        iconClass: "bg-pink-500/10 text-pink-400",
-      },
-    ]}
-    image={devImg}
-    imageAlt="Development"
-  >
+  <Content2 image={smil40} imageAlt="Development">
     <Fragment>
       <h3 class="text-2xl font-bold tracking-tight sm:text-3xl mb-2">
-        Development
+        AV ENTREPRENÖRER, <br />
+        FÖR ENTREPRENÖRER
       </h3>
-      We provide a solid foundation to start your projects with best practices.
+
+      <div class="w-24 h-1 bg-primary rounded-full mb-6"></div>
+
+      <p class="text-lg text-muted-foreground">
+        <p>
+          <p class="text-lg text-muted-foreground mb-4">
+            Vi tror på <strong>låga trösklar</strong> och <strong
+              >högt i tak</strong
+            >.
+          </p>
+
+          <p class="text-lg text-muted-foreground mb-4">
+            Vi tror att <strong>möten</strong> med andra människor <strong
+              >berikar</strong
+            > oss.
+          </p>
+
+          <p class="text-lg text-muted-foreground">
+            Vi tror att <strong>tillsammans</strong> kan vi <strong
+              >bli klokare</strong
+            > än vad vi kan åstadkomma själva.
+          </p>
+        </p>
+      </p>
     </Fragment>
   </Content2>
-  <Content2
-    items={[
-      {
-        title: "Open Source",
-        description:
-          "Developed under the MIT license, free for personal and commercial use.",
-        icon: "lucide:github",
-        iconClass: "bg-indigo-500/10 text-indigo-400",
-      },
-      {
-        title: "Community Driven",
-        description:
-          "Built with the feedback and contributions of the developer community.",
-        icon: "lucide:users",
-        iconClass: "bg-orange-500/10 text-orange-400",
-      },
-      {
-        title: "Regular Updates",
-        description:
-          "Continuously improved with the latest technologies and best practices.",
-        icon: "lucide:refresh-cw",
-        iconClass: "bg-teal-500/10 text-teal-400",
-      },
-    ]}
-    image={openSourceImg}
-    imageAlt="Community and Open Source"
-    isReversed={true}
-  >
-    <Fragment>
-      <h3 class="text-2xl font-bold tracking-tight sm:text-3xl mb-2">
-        Open Source & Community
-      </h3>
-      Join the revolution of modern web development. This project is open for everyone
-      to use, learn from, and contribute to.
-    </Fragment>
-  </Content2>
+
   <Integrations
     title="Trusted by top companies"
     subtitle="Our platform integrates seamlessly with your favorite tools."

@@ -1,6 +1,8 @@
 ---
 import { siteConfig } from "@/config/site";
 
+import { Icon } from "astro-icon/components";
+
 import { Image } from "astro:assets";
 import smilLogo from "@/assets/smil-logga.png";
 ---
@@ -22,15 +24,17 @@ import smilLogo from "@/assets/smil-logga.png";
           target="_blank"
           rel="noopener noreferrer"
           class="text-muted-foreground transition-colors hover:text-primary"
-          >Facebook</a
         >
+          <Icon name="tabler:brand-facebook" class="h-8 w-8" />
+        </a>
         <a
           href={siteConfig.socialLinks.linkedin}
           target="_blank"
           rel="noopener noreferrer"
           class="text-muted-foreground transition-colors hover:text-primary"
-          >LinkedIn</a
         >
+          <Icon name="tabler:brand-linkedin" class="h-8 w-8" />
+        </a>
       </div>
     </div>
     <div

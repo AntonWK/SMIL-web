@@ -1,4 +1,5 @@
 import ogImage from "@/assets/og-image.png";
+import { text } from "node:stream/consumers";
 
 export const siteConfig = {
   name: "Smil",
@@ -18,8 +19,8 @@ export const siteConfig = {
     { text: "Hem", href: "/" },
     {
       text: "Utbildningar",
-      href: "/utbildningar",
       links: [
+        { text: "Alla utbildningar", href: "/utbildningar" },
         {
           text: "Managementprogram i retorik",
           href: "/utbildningar/managementprogram-i-retorik",
@@ -32,8 +33,8 @@ export const siteConfig = {
     },
     {
       text: "Evenemang",
-      href: "/evenemang",
       links: [
+        { text: "Alla evenemang", href: "/evenemang" },
         { text: "Smilpub", href: "/evenemang/smilpub" },
         { text: "Smil-konferens", href: "/evenemang/smil-konferens" },
       ],
