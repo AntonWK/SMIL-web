@@ -1,0 +1,47 @@
+---
+import WidgetWrapper from "./WidgetWrapper.astro";
+import type { HeroProps } from "@/types/types";
+import Headline from "@/components/ui/Headline.astro";
+
+const {
+  title = await Astro.slots.render("title"),
+  subtitle = await Astro.slots.render("subtitle"),
+  tagline,
+  description = await Astro.slots.render("description"),
+  id,
+  isDark = false,
+  classes = {},
+  bg = await Astro.slots.render("bg"),
+  animate = false,
+} = Astro.props as HeroProps;
+
+const { container: containerClassProp = "" } = classes;
+---
+
+<WidgetWrapper
+  id={id}
+  isDark={isDark}
+  containerClass={`pt-12 pb-6 relative ${containerClassProp}`}
+  bg={bg}
+  animate={animate}
+>
+  <div class="text-left">
+    {
+      (title || description) && (
+        <Headline
+          title={title}
+          subtitle={subtitle}
+          titleAs="h1"
+          classes={{
+            container: "mb-0 max-w-none",
+            title:
+              "text-foreground text-5xl md:text-7xl font-extrabold tracking-tight mb-6",
+            subtitle: "text-primary max-w-5xl text-4xl font-extrabold mb-10",
+          }}
+        />
+      )
+    }
+    <div class="w-24 h-1 bg-primary rounded-full mt-6"></div>
+  </div>
+  <slot />
+</WidgetWrapper>

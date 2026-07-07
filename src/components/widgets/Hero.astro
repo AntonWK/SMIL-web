@@ -4,15 +4,19 @@ import type { HeroProps } from "@/types/types";
 import Headline from "@/components/ui/Headline.astro";
 import Button from "@/components/ui/Button.astro";
 import { Icon } from "astro-icon/components";
+import { imageConfig } from "astro:assets";
+import { Image } from "astro:assets";
 
 const {
   title = await Astro.slots.render("title"),
+  subtitle = await Astro.slots.render("subtitle"),
   tagline,
   description = await Astro.slots.render("description"),
   actions = [],
   id,
   isDark = false,
   classes = {},
+  bgImage,
   bg = await Astro.slots.render("bg"),
   animate = false,
 } = Astro.props as HeroProps;
@@ -23,11 +27,24 @@ const { container: containerClassProp = "" } = classes;
 <WidgetWrapper
   id={id}
   isDark={isDark}
-  containerClass={`min-h-[calc(100vh-72px)] flex flex-col justify-center ${containerClassProp}`}
+  containerClass={`min-h-[calc(100vh-72px)] flex flex-col justify-center relative ${containerClassProp}`}
   bg={bg}
   animate={animate}
 >
-  <div class="text-center">
+  {
+    bgImage && bgImage.src && (
+      <div class="absolute top-0 left-1/2 w-[100vw] h-full -translate-x-1/2 z-0 overflow-hidden pointer-events-none shadow-2xl">
+        <Image
+          src={bgImage.src}
+          alt={bgImage.alt || "Bakgrund"}
+          class="object-cover object-top w-full h-full"
+        />
+        {/* <div class="absolute inset-0 bg-black/60" /> */}
+      </div>
+    )
+  }
+
+  <div class="text-center relative z-10">
     {
       tagline && (
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold mb-6">
@@ -43,13 +60,14 @@ const { container: containerClassProp = "" } = classes;
       (title || description) && (
         <Headline
           title={title}
-          subtitle={description}
+          subtitle={subtitle}
           titleAs="h1"
           classes={{
             container: "mb-0 max-w-none",
             title:
-              "text-5xl md:text-7xl font-extrabold tracking-tight text-foreground mb-6",
-            subtitle: "max-w-2xl mx-auto text-xl text-muted-foreground mb-10",
+              "text-white [-webkit-text-stroke:2px_black] [paint-order:stroke_fill] text-5xl md:text-7xl font-extrabold tracking-tight text-foreground mb-6",
+            subtitle:
+              "text-primary [-webkit-text-stroke:2px_black] [paint-order:stroke_fill] max-w-5xl mx-auto text-4xl font-extrabold mb-10",
           }}
         />
       )

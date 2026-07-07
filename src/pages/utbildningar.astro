@@ -1,0 +1,79 @@
+---
+import Headline from "@/components/ui/Headline.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Content from "@/components/widgets/Content2.astro";
+import PageTitle from "@/components/widgets/PageTitle.astro";
+import Content2 from "@/components/widgets/Content2.astro";
+
+import { Image } from "astro:assets";
+import utvp from "@/assets/utvp-bild.png";
+import WidgetWrapper from "@/components/widgets/WidgetWrapper.astro";
+import Button from "@/components/ui/Button.astro";
+
+import { Icon } from "astro-icon/components";
+---
+
+<BaseLayout>
+  <PageTitle title="Utbildningar" />
+  <WidgetWrapper
+    containerClass="max-w-5xl mx-auto p-8 md:p-12 mb-12 rounded-[2.5rem] shadow-xl border border-black/5 bg-primary/5 relative"
+  >
+    <Headline
+      title="Utvecklingsprogrammet"
+      subtitle="Den här utbildningen är till för dig som vill utveckla ditt företag till nästa nivå. Utvecklingsprogrammet är ett av våra mest uppskattade program. Här har företag som SECTRA, Kreatel, Exsitec, Hiq, Xamera, Gooli, Webking, Sensorbee m fl hjälpt varandra att komma igenom knäckfrågor som varit viktiga att lösa för deras fortsatta utveckling."
+      classes={{
+        container: "mb-8",
+        title:
+          "text-4xl md:text-5xl font-bold tracking-tighter mb-4 font-heading",
+        subtitle: "text-2xl text-muted-foreground",
+      }}
+    />
+
+    <Image
+      src={utvp}
+      alt="Utvecklingsprogrammet kommentar"
+      class="mx-auto w-full rounded-lg bg-gray-500 shadow-lg"
+    />
+
+    <Button
+      href="/utbildningar/utvecklingsprogrammet"
+      variant="primary"
+      size="lg"
+      class="mt-6"
+    >
+      <Icon name="lucide:trending-up" class="w-5 h-5 mr-2" />
+      Läs mer om SMILs utvecklingsprogram
+    </Button>
+  </WidgetWrapper>
+
+  <WidgetWrapper
+    containerClass="max-w-5xl mx-auto p-8 md:p-12 mb-12 rounded-[2.5rem] shadow-xl border border-black/5 bg-primary/5 relative"
+  >
+    <Headline
+      title="Retorikprogrammet"
+      subtitle="Den här utbildningen i retorik är till för dig som vill få folk att lyssna när du talar eller framför något. Du får konkreta mallar, verktyg och strukturer för hur du planerar, disponerar och framför olika typer av presentationer."
+      classes={{
+        container: "mb-0",
+        title:
+          "text-4xl md:text-5xl font-bold tracking-tighter mb-4 font-heading",
+        subtitle: "text-2xl text-muted-foreground",
+      }}
+    />
+
+    <!-- <Image
+      src={utvp}
+      alt="Utvecklingsprogrammet kommentar"
+      class="mx-auto w-full rounded-lg bg-gray-500 shadow-lg"
+    /> -->
+
+    <Button
+      href="/utbildningar/managementprogram-i-retorik"
+      variant="primary"
+      size="lg"
+      class="mt-6"
+    >
+      <Icon name="lucide:presentation" class="w-5 h-5 mr-2" />
+      Läs mer om smils managementprogram i retorik här
+    </Button>
+  </WidgetWrapper>
+</BaseLayout>

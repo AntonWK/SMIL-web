@@ -5,7 +5,8 @@ import Hero from "@/components/widgets/Hero.astro";
 import Features from "@/components/widgets/Features.astro";
 import openSourceImg from "@/assets/images/open-source.png";
 import Content2 from "@/components/widgets/Content2.astro";
-import Github from "@/components/widgets/Github.astro";
+import ImageCarousel from "@/components/widgets/ImageCarousel.astro";
+import AnimatedCTA from "@/components/widgets/AnimatedCTA.astro";
 import Integrations from "@/components/widgets/Integrations.astro";
 const metadata = {
   title: `${siteConfig.name} — Nätverk och företagsutveckling i Linköping`,
@@ -14,15 +15,21 @@ const metadata = {
 };
 
 import { Image } from "astro:assets";
-import smilBanner from "@/assets/images/smil-banner-utvp.png";
+import smilBanner from "@/assets/smil-banner-utvp.png";
 import smilLogo from "@/assets/smil-logga.png";
 import smil40 from "@/assets/smil-40.png";
+import Testimonials from "@/components/widgets/Testimonials.astro";
+import CallToAction from "@/components/widgets/CallToAction.astro";
 ---
 
 <BaseLayout {metadata}>
   <Hero
-    title={`VÄLKOMMEN TILL SMIL <br class="hidden md:block" /> <span class="bg-linear-to-r bg-primary bg-clip-text text-transparent">Linköpings nätverk för företagsledare och entreprenörer</span>`}
-    tagline=""
+    title="VÄLKOMMEN TILL SMIL"
+    subtitle="Linköpings nätverk för företagsledare och entreprenörer"
+    bgImage={{
+      src: smilBanner,
+      alt: "SMIL Banner",
+    }}
     description={`${siteConfig.description}`}
     actions={[
       {
@@ -101,34 +108,38 @@ import smil40 from "@/assets/smil-40.png";
     </Fragment>
   </Content2>
 
-  <Integrations
-    title="Trusted by top companies"
-    subtitle="Our platform integrates seamlessly with your favorite tools."
-    tagline="Integrations"
-    integrations={[
-      { name: "Astro", icon: "tabler:brand-astro", url: "#" },
-      { name: "Tailwind CSS", icon: "tabler:brand-tailwind", url: "#" },
-      { name: "Vercel", icon: "tabler:brand-vercel", url: "#" },
-      { name: "GitHub", icon: "tabler:brand-github", url: "#" },
-    ]}
-  />
-  <Github
-    title="Don't forget to star us!"
-    subtitle="Support this template and keep the project alive. Your stars help us continue improving and adding new features."
-    tagline="Open Source"
-    icon="lucide:github"
-    actions={[
+  <ImageCarousel
+    title="Våra evenemang"
+    subtitle="Vi anordnar flera olika typer av nätverksträffar och utbildningar"
+    images={[
       {
-        text: "Star on GitHub",
-        href: "https://github.com/devgelo-labs/astro-starter-pro",
-        variant: "primary",
-        icon: "lucide:star",
+        src: smilBanner,
+        alt: "SMIL Banner",
       },
       {
-        text: "Fork Repository",
-        href: "https://github.com/devgelo-labs/astro-starter-pro/fork",
-        variant: "secondary",
-        icon: "lucide:git-fork",
+        src: smil40,
+        alt: "SMIL 40",
+      },
+      {
+        src: smil40,
+        alt: "SMIL 40",
+      },
+    ]}
+  />
+
+  <AnimatedCTA
+    title="Bli en del av nätverket!"
+    paragraphs={[
+      "Syftet med SMIL är att främja företagsutvecklingen i Linköping och att skapa engagemang kring frågor som rör entreprenörskap.",
+      "Som medlem hos oss får du tillgång till ett stort nätverk med företagsledare i Linköping. Vi anordnar flera olika typer av nätverksträffar och utbildningar under året där man har möjlighet att dela erfarenheter och knyta nya affärskontakter. Vi vill skapa de bästa förutsättningarna för våra medlemmar att utveckla sitt ledarskap och företagande.",
+      "Tillsammans skapar vi en av Europas bästa och mest kreativa entreprenörs- och innovationsmiljöer.",
+    ]}
+    actions={[
+      {
+        text: "Bli medlem",
+        href: "/bli-medlem",
+        variant: "primary",
+        icon: "lucide:user-plus",
       },
     ]}
   />

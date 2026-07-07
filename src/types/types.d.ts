@@ -46,6 +46,10 @@ export interface HeroProps extends HeadlineProps {
   description?: string; // override or additional? Hero has description, Headline has subtitle. Hero has actions.
   actions?: string | CallToAction[];
   image?: ImageMetadata | string; // Just in case, though checked Hero.astro and it uses slots mostly or props.
+  bgImage?: {
+    src: ImageMetadata | string;
+    alt: string;
+  };
 }
 
 export interface FeaturesProps extends HeadlineProps {
