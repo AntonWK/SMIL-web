@@ -1,3 +1,5 @@
+import type { StringMappingType } from "typescript";
+
 export interface CallToAction {
   text: string;
   href: string;
@@ -11,9 +13,17 @@ export interface Feature {
   description: string;
   icon?: string;
   iconClass?: string;
+  mail?: string;
 }
 
-export type Value = Feature;
+export type Person = {
+  name: string;
+  role?: string;       // Titeln (t.ex. VD, Utvecklare)
+  company?: string;    // Företaget
+  mail?: string;
+  image?: ImageMetadata; // Stöd för både URL och Astro-bilder
+  imageUrl?: string;
+}
 
 export interface Service {
   title: string;
@@ -68,12 +78,16 @@ export interface ContentProps extends HeadlineProps {
   actions?: string | CallToAction[];
 }
 
+export interface SplitContentProps extends ContentProps {
+  columnRatio?: "1/2-1/2" | "1/3-2/3" | "2/3-1/3";
+}
+
 export interface ServiceListProps extends HeadlineProps {
   services?: Service[];
 }
 
-export interface ValuesProps extends HeadlineProps {
-  items?: Value[];
+export interface PeopleProps extends HeadlineProps {
+  items?: Person[];
   columns?: 1 | 2 | 3 | 4;
 }
 

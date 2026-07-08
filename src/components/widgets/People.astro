@@ -1,0 +1,83 @@
+---
+import WidgetWrapper from "./WidgetWrapper.astro";
+import type { PeopleProps } from "@/types/types";
+import Card from "@/components/ui/Card.astro";
+import Headline from "@/components/ui/Headline.astro";
+import { Icon } from "astro-icon/components";
+
+import Avatar from "../bearnie/avatar/Avatar.astro";
+import AvatarFallback from "../bearnie/avatar/AvatarFallback.astro";
+import AvatarImage from "../bearnie/avatar/AvatarImage.astro";
+
+const {
+  items = [],
+  columns = 2,
+  title,
+  subtitle,
+  tagline,
+  id,
+  isDark = false,
+  classes = {},
+  bg = await Astro.slots.render("bg"),
+} = Astro.props as PeopleProps;
+
+const { container: containerClassProp = "", ...otherClasses } = classes;
+
+const gridCols = {
+  1: "grid-cols-1",
+  2: "grid-cols-1 md:grid-cols-2",
+  3: "grid-cols-1 md:grid-cols-3",
+  4: "grid-cols-1 md:grid-cols-4",
+};
+---
+
+<WidgetWrapper
+  id={id}
+  isDark={isDark}
+  containerClass={` ${containerClassProp}`}
+  bg={bg}
+  classes={otherClasses}
+>
+  <Headline
+    title={title}
+    subtitle={subtitle}
+    tagline={tagline}
+    classes={{
+      container: "max-w-3xl mx-auto text-center mb-12",
+    }}
+  />
+  <!-- <div class={`grid ${gridCols[columns]} gap-8 text-left` använder grid}> -->
+    <div class="flex flex-wrap justify-center gap-8 text-left">
+    {
+      items.map((person) => (
+        <Card class="w-full md:w-[calc(50%-1rem)] flex flex-row items-center gap-6">
+        {/* <Card class="flex flex-row items-center gap-6">   använder gird*/}
+          {person.image && (
+            <div class="shrink-0">
+              <Avatar size="xxl">
+                <AvatarImage
+                  src={person.imageUrl as string}
+                  alt={person.name}
+                />
+                <AvatarFallback>{person.name.substring(0, 2)}</AvatarFallback>
+              </Avatar>
+            </div>
+          )}
+          <div class="flex flex-col">
+            <h3 class="text-2xl font-bold text-foreground mb-2">
+              {person.name}
+            </h3>
+            <p class="text-md font-bold text-muted-foreground">{person.role}</p>
+            <p class="text-md text-muted-foreground">{person.company}</p>
+            <a
+              href={`mailto:${person.mail}`}
+              class="underline decoration-primary decoration-1 underline-offset-4 hover:text-primary transition-colors text-md text-muted-foreground"
+            >
+              {person.mail}
+            </a>
+          </div>
+        </Card>
+      ))
+    }
+  </div>
+</WidgetWrapper>

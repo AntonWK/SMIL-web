@@ -1,46 +1,75 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getImage } from "astro:assets";
-import Content2 from "@/components/widgets/Content2.astro";
-import Values from "@/components/widgets/Values.astro";
+import SplitContent from "@/components/widgets/SplitContent.astro";
+import People from "@/components/widgets/People.astro";
 import aboutImage from "@/assets/smil-40.png";
+import PageTitle from "@/components/widgets/PageTitle.astro";
+import WidgetWrapper from "@/components/widgets/WidgetWrapper.astro";
+
+import aseelImage from "@/assets/styrelsen/aseel-berglund.jpg";
+import bjornImage from "@/assets/styrelsen/bjorn.png";
+import saraImage from "@/assets/styrelsen/sara.jpg";
+import peterImage from "@/assets/styrelsen/peter.jpg";
+import andersImage from "@/assets/styrelsen/Anders.jpg";
+import lottaImage from "@/assets/styrelsen/lotta.png";
+import mikaelImage from "@/assets/styrelsen/mikael-hult.jpg";
 
 const metadata = {
   title: "About us",
-  description:
-    "Learn more about our vision, values, and the team behind Astro Starter Pro.",
 };
 
-const values = [
+const people = [
   {
-    title: "Innovation",
-    description:
-      "Curabitur dignissim, felis non sollicitudin molestie, urna mauris pellentesque velit, ut eleifend.",
+    name: "Aseel Berglund",
+    role: "Ordförande",
+    company: "Linköping University och Liopep AB",
+    mail: "aseel.berglund@liu.se",
+    image: aseelImage,
+    imageUrl: aseelImage.src,
   },
   {
-    title: "Commitment",
-    description:
-      "Aenean condimentum finibus mauris, a fermentum justo pan eget. Sed ultricies, neque quis.",
+    name: "Björn Elenfors",
+    company: "Benalto AB",
+    mail: "bjorn@elenfors.com",
+    image: bjornImage,
+    imageUrl: bjornImage.src,
   },
   {
-    title: "Quality",
-    description:
-      "Donec sed orci tincidunt, aliquam nisl a, condimentum nunc. Nulla varius ex nec ante feugiat.",
+    name: "Sara Ådahl-Aggebäck",
+    company: "Embersvik Consulting AB",
+    mail: "sara@embersvikconsulting.se",
+    image: saraImage,
+    imageUrl: saraImage.src,
   },
   {
-    title: "Transparency",
-    description:
-      "Phasellus tristique, elit dapibus cursus facilisis, lorem augue fringilla nunc, vitae fermentum.",
+    name: "Peter Lindgren",
+    company: "Visiarc",
+    mail: "peter@visiarc.com",
+    image: peterImage,
+    imageUrl: peterImage.src,
   },
   {
-    title: "Teamwork",
-    description:
-      "In hac habitasse platea dictumst. Vivamus adipiscing fermentum quam volutpat aliquam. Integer et.",
+    name: "Anders Petersson",
+    company: "Sparv Embedded",
+    mail: "anders@sparvembedded.com",
+    image: andersImage,
+    imageUrl: andersImage.src,
   },
   {
-    title: "Excellence",
-    description:
-      "Fusce at massa nec sapien auctor gravida in in tellus. Vivamus a tristique metus, et molestie.",
+    name: "Ann-Charlotte Johannesson",
+    company: "NXT Learning, CEI",
+    mail: "lotta.m.johannesson@gmail.com",
+    image: lottaImage,
+    imageUrl: lottaImage.src,
+  },
+  {
+    name: "Mikael Hult",
+    role: "Suppleant",
+    company: "GI Lift",
+    mail: "mikael.hult@milt.se ",
+    image: mikaelImage,
+    imageUrl: mikaelImage.src,
   },
 ];
 
@@ -51,36 +80,51 @@ const optimizedImage = await getImage({
 ---
 
 <BaseLayout {metadata}>
-  <link slot="head" rel="preload" href={optimizedImage.src} as="image" />
-  <Content2
-    title="Our Vision"
-    description={[
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-      "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    ]}
-    tagline="About"
-    image={aboutImage}
-    imageAlt="Modern web development office"
-    actions={[
-      {
-        text: "Contact Us",
-        href: "/contact",
-        variant: "primary",
-        icon: "lucide:mail",
-      },
-      {
-        text: "View Details",
-        href: "#",
-        variant: "secondary",
-        icon: "lucide:arrow-right",
-      },
-    ]}
-  />
-  <Values
-    items={values}
-    columns={3}
-    tagline="Our Values"
-    title="What Defines Us"
-    subtitle="Principles that guide our daily work"
-  />
+  <PageTitle title="Vad är SMIL?" />
+  <WidgetWrapper>
+    <hr class="border-gray-200 dark:border-slate-800 mb-8" />
+    <SplitContent
+      description={[
+        "SMIL är nätverket för Linköpings entreprenörer och företagsledare. Här får du tillgång till utbildningar, nätverksträffar och seminarier inom områden som berör och utvecklar ditt företagande. Du får också möjlighet att etablera nya affärskontakter – både lokala och globala – via våra nätverksträffar, aktiviteter och workshops.",
+        "Tillsammans kan vi skapa en av Europas bästa och mest kreativa entreprenörs- och innovationsmiljöer.",
+      ]}
+      actions={[
+        {
+          text: "Bli medlem",
+          href: "/bli-medlem",
+          variant: "primary",
+          icon: "lucide:user-plus",
+        },
+      ]}
+      columnRatio="2/3-1/3"
+      items={[
+        {
+          title: "Kontaktuppgifter",
+          icon:"lucide:mail",
+          description: ["Mikael Hult",
+          "+46 (0)70 564 25 45",
+          ],
+          mail:"info@smil.se",
+        },
+        {
+          title: "Faktureringsadress",
+          icon: "lucide:receipt",
+          mail: "faktura@smil.se"
+        },
+        {
+          title:"Utdelningsadress",
+          icon:"lucide:map-pin",
+          description : "Rådjursvägen 7, 587 31 Linköping"
+        }
+      ]}
+    />
+    <hr class="border-gray-200 dark:border-slate-800 mb-8" />
+
+    <People
+      items={people}
+      columns={2}
+      tagline="Styrelsen"
+      title="SMIL-teamet"
+    />
+  </WidgetWrapper>
 </BaseLayout>

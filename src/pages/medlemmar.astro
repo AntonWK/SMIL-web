@@ -1,0 +1,40 @@
+---
+import PageTitle from "@/components/widgets/PageTitle.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import WidgetWrapper from "@/components/widgets/WidgetWrapper.astro";
+import MembersList from "@/components/widgets/MembersList.astro";
+---
+
+<BaseLayout>
+  <PageTitle title="Medlemsregister" />
+  <WidgetWrapper containerClass="pt-0 md:pt-0">
+    <div class="grid md:grid-cols-2 gap-8 text-left text-lg mt-8 mb-12">
+      <div>
+        <p>
+          SMIL grundades i Linköping 1985 och har till idag växt och blivit ett
+          stort nätverk av företagsledare och entreprenörer som tillsammans
+          stärker varandra genom kontakter och erfarenhetsutbyten.
+        </p>
+      </div>
+      <div>
+        <p>
+          Låter detta intressant för dig – <a
+            href="/bli-medlem"
+            class="underline decoration-primary decoration-2 underline-offset-4 hover:text-primary transition-colors"
+            >bli medlem</a
+          > eller kom förbi på något av våra <a
+            href="/evenemang"
+            class="underline decoration-primary decoration-2 underline-offset-4 hover:text-primary transition-colors"
+            >evenemang</a
+          > för att känna in stämningen och se om SMIL är något för dig.&nbsp;
+        </p>
+      </div>
+    </div>
+
+    <div
+      class="max-w-9xl mx-auto p-8 md:p-12 mb-0 rounded-[2.5rem] shadow-xl border border-black/5 bg-primary/5 relative"
+    >
+      <MembersList />
+    </div>
+  </WidgetWrapper>
+</BaseLayout>

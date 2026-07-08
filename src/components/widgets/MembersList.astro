@@ -1,0 +1,59 @@
+---
+import { members } from "@/data/members.ts";
+
+import Tabs from "@/components/bearnie/tabs/Tabs.astro";
+import TabsList from "@/components/bearnie/tabs/TabsList.astro";
+import TabsTrigger from "@/components/bearnie/tabs/TabsTrigger.astro";
+import TabsContent from "@/components/bearnie/tabs/TabsContent.astro";
+
+const groupedMembers: Record<string, typeof members> = {};
+
+members.forEach((member) => {
+  const firstLetter = member.name.charAt(0).toUpperCase();
+
+  if (!groupedMembers[firstLetter]) {
+    groupedMembers[firstLetter] = [];
+  }
+  groupedMembers[firstLetter].push(member);
+});
+
+const activeLetters = Object.keys(groupedMembers).sort();
+
+const tabs = ["Alla", ...activeLetters];
+---
+
+<Tabs defaultValue={tabs[0]}>
+  <TabsList class="flex flex-wrap gap-2 mb-2">
+    {
+      tabs.map((tab) => (
+        <TabsTrigger class="bg-background/80" value={tab}>
+          {tab}
+        </TabsTrigger>
+      ))
+    }
+  </TabsList>
+  <hr class="border-gray-200 dark:border-slate-800 mb-8" />
+  {
+    tabs.map((tab) => (
+      <TabsContent value={tab}>
+        {tab === tabs[0]
+          ? members.map((member) => member.url ? (
+                <a class="underline decoration-primary decoration-2 underline-offset-4 hover:text-primary transition-colors" href={member.url}>{member.name}</a>
+              ) : (
+                <p>{member.name}</p>
+              ))
+          : groupedMembers[tab].map((member) =>
+              member.url ? (
+                <a class="underline decoration-primary decoration-2 underline-offset-4 hover:text-primary transition-colors" href={member.url}>{member.name}</a>
+              ) : (
+                <p>{member.name}</p>
+              ),
+            )}
+      </TabsContent>
+    ))
+  }
+
+  <TabsContent value="account">
+    <p>Make changes to your account here.</p>
+  </TabsContent></Tabs
+>

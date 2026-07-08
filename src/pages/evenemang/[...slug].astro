@@ -5,7 +5,7 @@ import Schema from "@/components/seo/Schema.astro";
 import { getCollection, render } from "astro:content";
 
 export async function getStaticPaths() {
-  const blog = await getCollection("blog");
+  const blog = await getCollection("evenemang");
   return blog.map((post) => ({
     params: { slug: post.id },
     props: { post },

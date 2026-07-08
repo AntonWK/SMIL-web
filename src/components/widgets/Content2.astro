@@ -40,7 +40,7 @@ const { container: containerClassProp = "", ...otherClasses } = classes;
       <Headline
         title={title}
         subtitle={subtitle ||
-          (Array.isArray(description) ? description.join(" ") : description)}
+          (Array.isArray(description) ? description.join("<br /><br />") : description)}
         tagline={tagline}
         titleAs="h2"
         classes={{
