@@ -33,11 +33,7 @@ export const siteConfig = {
     },
     {
       text: "Evenemang",
-      links: [
-        { text: "Alla evenemang", href: "/evenemang" },
-        { text: "Smilpub", href: "/evenemang/smilpub" },
-        { text: "Smil-konferens", href: "/evenemang/smil-konferens" },
-      ],
+      links: [],
     },
     { text: "Medlemmar", href: "/medlemmar" },
     { text: "Bli medlem", href: "/bli-medlem" },

@@ -2,25 +2,18 @@
 import { cn } from "@/utils/cn";
 import type { HTMLAttributes } from "astro/types";
 
+/* eslint-disable-next-line @typescript-eslint/no-empty-object-type */
 export interface Props extends HTMLAttributes<"div"> {}
 
-const {
-  class: className,
-  ...props
-} = Astro.props;
+const { class: className, ...props } = Astro.props;
 
 const classes = cn(
   "flex w-fit h-auto items-center justify-center rounded-lg p-1 text-muted-foreground gap-1",
-  className
+  className,
 );
 ---
 
-<div
-  role="tablist"
-  class={classes}
-  data-tabs-list
-  {...props}
->
+<div role="tablist" class={classes} data-tabs-list {...props}>
   <slot />
 </div>
 

@@ -10,10 +10,10 @@ export async function GET(context) {
     description: siteConfig.description,
     site: context.site,
     items: blog
-      .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+      .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
       .map((post) => ({
         title: post.data.title,
-        pubDate: post.data.pubDate,
+        date: post.data.date,
         description: post.data.description,
         link: `/blog/${post.id}/`,
         content: post.body, // Optional: include full content

@@ -2,14 +2,20 @@
 import { siteConfig } from "@/config/site";
 
 interface Props {
-  type: "WebSite" | "BlogPosting" | "BreadcrumbList";
+  type: "WebSite" | "Evenemang" | "BreadcrumbList";
   data: {
     title?: string;
     description?: string;
     image?: string;
-    pubDate?: Date;
-    author?: string;
+    date?: Date;
+    eventType?: string;
     url?: string;
+    location?: string;
+    startTime?: string;
+    endTime?: string;
+    price?: string;
+    speaker?: string;
+    lastSignupDate?: string;
   };
 }
 
@@ -25,22 +31,47 @@ if (type === "WebSite") {
     url: siteConfig.url,
     description: siteConfig.description,
     author: {
-      "@type": "Person",
+      "@type": "Organization",
       name: siteConfig.author,
     },
-    sameAs: [siteConfig.socialLinks.twitter, siteConfig.socialLinks.github],
+    sameAs: [siteConfig.socialLinks.facebook, siteConfig.socialLinks.linkedin],
   };
-} else if (type === "BlogPosting") {
+} else if (type === "Evenemang") {
   schema = {
     "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    headline: data.title,
+    "@type": "Event",
+    name: data.title,
     description: data.description,
     image: data.image,
-    datePublished: data.pubDate,
-    author: {
-      "@type": "Person",
-      name: data.author,
+    startDate: data.date,
+    keywords: data.eventType,
+    location: data.location
+      ? {
+          "@type": "Place",
+          name: data.location,
+        }
+      : undefined,
+    address: {
+      "@type": "PostalAddress",
+      addressCountry: "SE",
+    },
+    offers: data.price
+      ? {
+          "@type": "Offer",
+          description: data.price,
+        }
+      : undefined,
+    performer: data.speaker
+      ? {
+          "@type": "Person",
+          name: data.speaker,
+        }
+      : undefined,
+
+    organizer: {
+      "@type": "Organization",
+      name: siteConfig.name,
+      url: siteConfig.url,
     },
     mainEntityOfPage: {
       "@type": "WebPage",

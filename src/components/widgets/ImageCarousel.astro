@@ -55,11 +55,12 @@ const {
     <div class="marquee_content scroll">
       {
         images.map((image) => (
-          <div class="relative max-w-xl shrink-0 transition-transform duration-300 hover:scale-105 hover:z-10 cursor-pointer hover:shadow-xl">
+          // <div class="relative max-w-xl shrink-0 transition-transform duration-300 hover:scale-105 hover:z-10 cursor-pointer hover:shadow-xl">
+          <div class="hover-sideways-shadow relative max-w-xl shrink-0 transition-all duration-300 hover:scale-105 hover:z-20 cursor-pointer rounded-lg">
             <Image
               src={image.default}
               alt="bild från evenemang eller annan SMIL aktivitet"
-              class="mx-auto w-full max-h-80 object-cover rounded-lg bg-gray-500 shadow-lg"
+              class="mx-auto w-full max-h-80 object-cover rounded-lg bg-gray-500"
             />
           </div>
         ))
@@ -69,11 +70,12 @@ const {
     <div class="marquee_content scroll" aria-hidden="true">
       {
         images.map((image) => (
-          <div class="relative max-w-xl shrink-0 transition-transform duration-300 hover:scale-105 hover:z-10 cursor-pointer hover:shadow-2xl">
+          // <div class="relative max-w-xl shrink-0 transition-transform duration-300 hover:scale-105 hover:z-10 cursor-pointer hover:shadow-2xl">
+          <div class="hover-sideways-shadow relative max-w-xl shrink-0 transition-all duration-300 hover:scale-105 hover:z-20 cursor-pointer rounded-lg">
             <Image
               src={image.default}
               alt="bild från evenemang eller annan SMIL aktivitet"
-              class="mx-auto w-full max-h-80 object-cover rounded-lg bg-gray-500 shadow-lg"
+              class="mx-auto w-full max-h-80 object-cover rounded-lg bg-gray-500"
             />
           </div>
         ))
@@ -107,7 +109,7 @@ const {
     z-index: 10;
   }
 
-  .marquee:hover .scroll {
+  .marquee:has(.marquee_content > div:hover) .scroll {
     animation-play-state: paused;
   }
 
@@ -123,5 +125,11 @@ const {
     100% {
       transform: translateX(calc(-100% - 0.5rem));
     }
+  }
+
+  .hover-sideways-shadow:hover {
+    box-shadow:
+      25px 25px 30px -10px rgba(0, 0, 0, 0.3),
+      /* Skuggan ner till höger */ -25px 25px 30px -10px rgba(0, 0, 0, 0.3); /* Skuggan ner till vänster */
   }
 </style>

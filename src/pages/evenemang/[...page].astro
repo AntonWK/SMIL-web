@@ -3,23 +3,28 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import Headline from "@/components/ui/Headline.astro";
 import Pagination from "@/components/ui/Pagination.astro";
-import PostItem from "@/components/blog/PostItem.astro";
+import PostItem from "@/components/evenemang/PostItem.astro";
 import type { GetStaticPathsOptions } from "astro";
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
-  const blogEntries = await getCollection("blog");
-  const sortedPosts = blogEntries
-    .filter((post) => post.data && post.data.pubDate)
-    .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+  const evenemangEntries = await getCollection("evenemang");
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const sortedPosts = evenemangEntries
+    .filter((post) => post.data && post.data.date)
+    .filter((post) => new Date(post.data.date) >= today) // Visa bara framtida datum
+    .sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf());
 
   return paginate(sortedPosts, { pageSize: 6 });
 }
 
 const { page } = Astro.props;
-const blog = page.data;
+const evenemang = page.data;
 
 const metadata = {
-  title: "Blog",
+  title: "evenemang",
   description: "Latest news and updates from our team.",
 };
 ---
@@ -34,9 +39,9 @@ const metadata = {
     </div>
     <div class="relative mx-auto max-w-5xl">
       <Headline
-        tagline="Blog"
-        title="Our Publications"
-        subtitle="Explore the latest news, tutorials, and articles from our team."
+        tagline="Nätverksträffar"
+        title="Evenemang"
+        subtitle="Smil arrangerar normalt medlemsträffar första torsdagkvällen i månaden. Nedan finner du en lista över de närmaste och mer information om varje träff kan hittas i menyn ovan eller genom att klicka på rubriken."
         classes={{
           container: "reveal mb-12 text-center",
           title:
@@ -45,8 +50,8 @@ const metadata = {
         }}
       />
 
-      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-        {blog.map((post) => <PostItem post={post} />)}
+      <div class="flex flex-col gap-8">
+        {evenemang.map((post) => <PostItem post={post} />)}
       </div>
       <Pagination page={page} />
     </div>

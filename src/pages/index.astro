@@ -3,11 +3,9 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import { siteConfig } from "@/config/site";
 import Hero from "@/components/widgets/Hero.astro";
 import Features from "@/components/widgets/Features.astro";
-import openSourceImg from "@/assets/images/open-source.png";
 import Content2 from "@/components/widgets/Content2.astro";
 import ImageCarousel from "@/components/widgets/ImageCarousel.astro";
 import AnimatedCTA from "@/components/widgets/AnimatedCTA.astro";
-import Integrations from "@/components/widgets/Integrations.astro";
 const metadata = {
   title: `${siteConfig.name} — Nätverk och företagsutveckling i Linköping`,
   description: siteConfig.description,
@@ -56,20 +54,21 @@ import CallToAction from "@/components/widgets/CallToAction.astro";
       {
         title: "Evenemang",
         description:
-          "Base configuration for Meta tags, Open Graph, and Sitemap generation.",
+          "Delta i allt från inspirerande gästföreläsningar och givande medlemsträffar till avslappnat häng på våra SMIL-pubar.",
         icon: "lucide:calendar-days",
         iconClass: "bg-primary/10 text-primary",
       },
       {
         title: "Utbildningsprogram",
-        description: "Lightweight structure for fast load times.",
+        description:
+          "Ta nästa steg och utveckla ditt bolag i tätt samarbete och erfarenhetsutbyte med andra drivna företagsledare.",
         icon: "lucide:book-open",
         iconClass: "bg-primary/10 text-primary",
       },
       {
         title: "Nätvärkande med liksinta företagsledare",
         description:
-          "Integrated configuration with the latest version of Tailwind CSS.",
+          "Skapa värdefulla relationer i Linköpings mest engagerade och stöttande nätverk för företagsledare.",
         icon: "lucide:network",
         iconClass: "bg-primary/10 text-primary",
       },
@@ -135,6 +134,12 @@ import CallToAction from "@/components/widgets/CallToAction.astro";
       "Tillsammans skapar vi en av Europas bästa och mest kreativa entreprenörs- och innovationsmiljöer.",
     ]}
     actions={[
+      {
+        text: "Utforska evenemang",
+        href: "/evenemang",
+        variant: "secondary",
+        icon: "lucide:calendar-days",
+      },
       {
         text: "Bli medlem",
         href: "/bli-medlem",

@@ -3,15 +3,10 @@ import Tags from "@/components/ui/Tags.astro";
 import { type CollectionEntry, render } from "astro:content";
 
 export interface Props {
-  post: CollectionEntry<"blog">;
+  post: CollectionEntry<"evenemang">;
 }
 
 const { post } = Astro.props;
-const { remarkPluginFrontmatter } = await render(post);
-
-const readingTime = remarkPluginFrontmatter?.minutesRead
-  ? `${Math.ceil(remarkPluginFrontmatter.minutesRead)} min read`
-  : "";
 ---
 
 <article
@@ -31,10 +26,10 @@ const readingTime = remarkPluginFrontmatter?.minutesRead
   <div class="flex flex-1 flex-col p-6">
     <div class="flex-1">
       <p class="text-sm font-medium text-primary">
-        {post.data.author}
+        {post.data.eventType}
       </p>
       <a
-        href={`/blog/${post.id}`}
+        href={`/evenemang/${post.id}`}
         class="mt-2 block before:absolute before:inset-0 before:z-10"
       >
         <p class="text-xl font-semibold text-foreground group-hover:underline">
@@ -48,14 +43,14 @@ const readingTime = remarkPluginFrontmatter?.minutesRead
     <div class="mt-6 flex items-center">
       <div class="shrink-0">
         <span class="sr-only">
-          {post.data.author}
+          {post.data.eventType}
         </span>
       </div>
       <div class="">
-        <div class="flex space-x-1 text-sm text-muted-foreground">
-          <time datetime={post.data.pubDate.toISOString()}>
+        <div class="flex space-x-1 text-sm text-muted-foreground capitalize">
+          <time datetime={post.data.date.toISOString()}>
             {
-              post.data.pubDate.toLocaleDateString("en-US", {
+              post.data.date.toLocaleDateString("sv-SE", {
                 year: "numeric",
                 month: "long",
                 day: "numeric",
@@ -63,18 +58,17 @@ const readingTime = remarkPluginFrontmatter?.minutesRead
               })
             }
           </time>
-          {readingTime && <span aria-hidden="true">&bull;</span>}
-          {readingTime && <span>{readingTime}</span>}
+          {
+            post.data.startTime && (
+              <>
+                <span aria-hidden="true">&bull;</span>
+                <span>{post.data.startTime}</span>
+                {post.data.endTime && <span>- ca {post.data.endTime}</span>}
+              </>
+            )
+          }
         </div>
       </div>
     </div>
-
-    {
-      post.data.tags && (
-        <div class="mt-4 relative z-20">
-          <Tags tags={post.data.tags} />
-        </div>
-      )
-    }
   </div>
 </article>
