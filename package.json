@@ -24,14 +24,14 @@
     "@astrojs/sitemap": "^3.7.3",
     "@iconify-json/lucide": "^1.2.111",
     "@iconify-json/tabler": "^1.2.35",
-    "@tailwindcss/vite": "^4.3.0",
+    "@tailwindcss/vite": "^4.3.3",
     "@vercel/analytics": "^2.0.1",
     "astro": "^7.0.4",
     "astro-icon": "^1.1.5",
     "clsx": "^2.1.1",
     "remark-reading-time": "^2.1.0",
     "tailwind-merge": "^3.6.0",
-    "tailwindcss": "^4.3.0",
+    "tailwindcss": "^4.3.3",
     "typescript": "^5.9.3"
   },
   "devDependencies": {

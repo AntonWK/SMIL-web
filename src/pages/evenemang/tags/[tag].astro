@@ -2,10 +2,10 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import Headline from "@/components/ui/Headline.astro";
-import PostItem from "@/components/blog/PostItem.astro";
+import PostItem from "@/components/evenemang/PostItem.astro";
 
 export async function getStaticPaths() {
-  const allPosts = await getCollection("blog");
+  const allPosts = await getCollection("evenemang");
   const posts = allPosts.filter((post) => post.data && post.data.date); // Ensure published
 
   const tags = new Set();
@@ -48,7 +48,9 @@ const metadata = {
       />
 
       <div class="mb-8 text-center">
-        <a href="/blog" class="text-primary hover:underline">← Back to blog</a>
+        <a href="/evenemang" class="text-primary hover:underline"
+          >← Back to evenemang</a
+        >
       </div>
 
       <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
