@@ -35,10 +35,5 @@ export default defineConfig({
   },
   vite: {
     plugins: [tailwindcss()],
-    build: {
-      rollupOptions: {
-        input: {}, // <-- Fixen för Vercel-felet
-      },
-    },
   },
 });
