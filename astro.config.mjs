@@ -34,6 +34,21 @@ export default defineConfig({
     inlineStylesheets: "always",
   },
   vite: {
-    plugins: [tailwindcss()],
+    plugins: [tailwindcss(),
+
+      {
+        name: "fix-tailwind-ssr-bug",
+        enforce: "post",
+        config(config) {
+          if (
+            config.build &&
+            config.build.rollupOptions &&
+            config.build.rollupOptions.input === "index.html"
+          ) {
+            config.build.rollupOptions.input = undefined;
+          }
+        },
+      },
+    ],
   },
 });
