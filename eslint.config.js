@@ -21,6 +21,7 @@ export default [
       "jsx-a11y/alt-text": "error",
       "jsx-a11y/anchor-is-valid": "error",
       "jsx-a11y/no-static-element-interactions": "off",
+      "@typescript-eslint/no-explicit-any": "off",
     },
   },
   {

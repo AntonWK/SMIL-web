@@ -1,19 +1,43 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Schema from "@/components/seo/Schema.astro";
-
-import { getCollection, render } from "astro:content";
+import { sanityClient } from "sanity:client";
+import { PortableText } from "astro-portabletext";
 
 export async function getStaticPaths() {
-  const blog = await getCollection("evenemang");
-  return blog.map((post) => ({
-    params: { slug: post.id },
-    props: { post },
+  const query = `*[_type == "evenemang" && defined(slug.current)] {
+    title,
+    description,
+    date,
+    eventType,
+    "image": image.asset->url,
+    location,
+    startTime,
+    endTime,
+    price,
+    speaker,
+    lastSignupDate,
+    body,
+    "slug": slug.current
+  }`;
+
+  const events = await sanityClient.fetch(query);
+
+  return events.map((event: any) => ({
+    params: { slug: event.slug },
+    props: {
+      post: {
+        data: {
+          ...event,
+          date: new Date(event.date), // Gör om strängen till ett Date-objekt så toLocaleDateString() funkar
+        },
+        slug: event.slug,
+      },
+    },
   }));
 }
 
-const { post } = Astro.props;
-const { Content } = await render(post);
+const { post } = Astro.props as any;
 const {
   title,
   description,
@@ -26,6 +50,7 @@ const {
   price,
   speaker,
   lastSignupDate,
+  body,
 } = post.data;
 
 const formattedDate = date.toLocaleDateString("sv-SE", {
@@ -93,7 +118,7 @@ const metadata = {
       <div
         class="reveal prose prose-lg dark:prose-invert mx-auto prose-headings:text-foreground prose-a:text-primary hover:prose-a:underline prose-p:text-muted-foreground prose-strong:text-foreground prose-li:text-muted-foreground prose-code:text-primary"
       >
-        <Content />
+        <PortableText value={body} />
       </div>
     </div>
   </section>

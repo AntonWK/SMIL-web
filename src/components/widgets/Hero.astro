@@ -35,9 +35,11 @@ const { container: containerClassProp = "" } = classes;
     bgImage && bgImage.src && (
       <div class="absolute top-0 left-1/2 w-[100vw] h-full -translate-x-1/2 z-0 overflow-hidden pointer-events-none shadow-2xl">
         <Image
-          src={bgImage.src}
+          src={bgImage.src as any}
           alt={bgImage.alt || "Bakgrund"}
           class="object-cover object-top w-full h-full"
+          width={1920}
+          height={1080}
         />
         {/* <div class="absolute inset-0 bg-black/60" /> */}
       </div>

@@ -1,21 +1,44 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { getCollection } from "astro:content";
+import { sanityClient } from "sanity:client";
 import Headline from "@/components/ui/Headline.astro";
 import Pagination from "@/components/ui/Pagination.astro";
 import PostItem from "@/components/evenemang/PostItem.astro";
 import type { GetStaticPathsOptions } from "astro";
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
-  const evenemangEntries = await getCollection("evenemang");
+  const query = `*[_type == "evenemang"] {
+    title,
+    "slug": slug.current,
+    date,
+    description,
+    eventType,
+    location,
+    "image": image.asset->url,
+    startTime,
+    endTime
+  }`;
+
+  const sanityEvents = await sanityClient.fetch(query);
+
+  // Mappa om så det matchar din befintliga struktur med .data
+  const evenemangEntries = sanityEvents.map((event: any) => ({
+    id: event.slug,
+    slug: event.slug,
+    data: {
+      ...event,
+      date: new Date(event.date),
+      slug: event.slug,
+    },
+  }));
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
   const sortedPosts = evenemangEntries
-    .filter((post) => post.data && post.data.date)
-    .filter((post) => new Date(post.data.date) >= today) // Visa bara framtida datum
-    .sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf());
+    .filter((post: any) => post.data && post.data.date)
+    .filter((post: any) => new Date(post.data.date) >= today) // Visa bara framtida datum
+    .sort((a: any, b: any) => a.data.date.valueOf() - b.data.date.valueOf());
 
   return paginate(sortedPosts, { pageSize: 6 });
 }
@@ -51,9 +74,9 @@ const metadata = {
       />
 
       <div class="flex flex-col gap-8">
-        {evenemang.map((post) => <PostItem post={post} />)}
+        {evenemang.map((post) => <PostItem post={post as any} />)}
       </div>
-      <Pagination page={page} />
+      <Pagination page={page as any} />
     </div>
   </section>
 </BaseLayout>

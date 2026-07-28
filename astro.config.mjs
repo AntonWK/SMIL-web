@@ -1,13 +1,22 @@
 import { defineConfig } from "astro/config";
+
 import sitemap from "@astrojs/sitemap";
 import mdx from "@astrojs/mdx";
 import tailwindcss from "@tailwindcss/vite";
 import icon from "astro-icon";
 import remarkReadingTime from "remark-reading-time";
 
+import sanity from "@sanity/astro";
+
 export default defineConfig({
   site: "https://astrostarterpro.com/",
-  integrations: [sitemap(), icon(), mdx()],
+  integrations: [sitemap(), icon(), mdx(), 
+    sanity({
+      projectId: "k7qg1olp",
+      dataset: "production",
+      useCdn: false, // for static builds
+    })
+  ],
   markdown: {
     remarkPlugins: [
       remarkReadingTime,
@@ -30,25 +39,10 @@ export default defineConfig({
     prefetchAll: true,
     defaultStrategy: "viewport",
   },
-  build: {
-    inlineStylesheets: "always",
-  },
+  // build: {
+  //   inlineStylesheets: "always",
+  // },
   vite: {
-    plugins: [tailwindcss(),
-
-      {
-        name: "fix-tailwind-ssr-bug",
-        enforce: "post",
-        config(config) {
-          if (
-            config.build &&
-            config.build.rollupOptions &&
-            config.build.rollupOptions.input === "index.html"
-          ) {
-            config.build.rollupOptions.input = undefined;
-          }
-        },
-      },
-    ],
+     plugins: [tailwindcss()],
   },
 });
