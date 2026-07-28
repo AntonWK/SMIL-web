@@ -1,32 +1,48 @@
 ---
-import { members } from "@/data/members.ts";
-
 import Tabs from "@/components/bearnie/tabs/Tabs.astro";
 import TabsList from "@/components/bearnie/tabs/TabsList.astro";
 import TabsTrigger from "@/components/bearnie/tabs/TabsTrigger.astro";
 import TabsContent from "@/components/bearnie/tabs/TabsContent.astro";
+import { sanityClient } from "sanity:client";
 
-const groupedMembers: Record<string, typeof members> = {};
+interface Member {
+  name: string;
+  url?: string;
+}
+
+const query = `*[_type == "members"] | order(company asc) {
+  "name": company,
+  url
+}`;
+
+const members = await sanityClient.fetch<Member[]>(query);
+
+const groupedMembers: Record<string, Member[]> = {};
 
 members.forEach((member) => {
-  const firstLetter = member.name.charAt(0).toUpperCase();
+  if (member.name) {
+    const firstLetter = member.name.charAt(0).toUpperCase();
 
-  if (!groupedMembers[firstLetter]) {
-    groupedMembers[firstLetter] = [];
+    if (!groupedMembers[firstLetter]) {
+      groupedMembers[firstLetter] = [];
+    }
+    groupedMembers[firstLetter].push(member);
   }
-  groupedMembers[firstLetter].push(member);
 });
 
 const activeLetters = Object.keys(groupedMembers).sort();
 
-const tabs = ["Alla", ...activeLetters];
+const tabs = [...activeLetters];
 ---
 
 <Tabs defaultValue={tabs[0]}>
-  <TabsList class="flex flex-wrap gap-2 mb-2">
+  <TabsList class="w-full flex flex-wrap justify-center gap-2 mb-2">
     {
       tabs.map((tab) => (
-        <TabsTrigger class="bg-background/80" value={tab}>
+        <TabsTrigger
+          class="bg-background/80 px-5 py-2.5 text-lg h-auto"
+          value={tab}
+        >
           {tab}
         </TabsTrigger>
       ))
@@ -36,19 +52,18 @@ const tabs = ["Alla", ...activeLetters];
   {
     tabs.map((tab) => (
       <TabsContent value={tab}>
-        {tab === tabs[0]
-          ? members.map((member) => member.url ? (
-                <a class="underline decoration-primary decoration-2 underline-offset-4 hover:text-primary transition-colors" href={member.url}>{member.name}</a>
-              ) : (
-                <p>{member.name}</p>
-              ))
-          : groupedMembers[tab].map((member) =>
-              member.url ? (
-                <a class="underline decoration-primary decoration-2 underline-offset-4 hover:text-primary transition-colors" href={member.url}>{member.name}</a>
-              ) : (
-                <p>{member.name}</p>
-              ),
-            )}
+        {groupedMembers[tab].map((member) =>
+          member.url ? (
+            <a
+              class="text-lg underline decoration-primary decoration-2 underline-offset-4 hover:text-primary transition-colors"
+              href={member.url}
+            >
+              {member.name}
+            </a>
+          ) : (
+            <p class="text-lg">{member.name}</p>
+          ),
+        )}
       </TabsContent>
     ))
   }

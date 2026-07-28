@@ -47,12 +47,12 @@ const gridCols = {
     }}
   />
   <!-- <div class={`grid ${gridCols[columns]} gap-8 text-left` använder grid}> -->
-    <div class="flex flex-wrap justify-center gap-8 text-left">
+  <div class="flex flex-wrap justify-center gap-8 text-left">
     {
       items.map((person) => (
         <Card class="w-full md:w-[calc(50%-1rem)] flex flex-row items-center gap-6">
-        {/* <Card class="flex flex-row items-center gap-6">   använder gird*/}
-          {person.image && (
+          {/* <Card class="flex flex-row items-center gap-6">   använder gird*/}
+          {person.imageUrl && (
             <div class="shrink-0">
               <Avatar size="xxl">
                 <AvatarImage
@@ -67,7 +67,12 @@ const gridCols = {
             <h3 class="text-2xl font-bold text-foreground mb-2">
               {person.name}
             </h3>
-            <p class="text-md font-bold text-muted-foreground">{person.role}</p>
+            {person.role && person.role.toLowerCase() !== "ledarmot" && (
+              <p class="text-md font-bold text-muted-foreground">
+                {person.role}
+              </p>
+            )}
+
             <p class="text-md text-muted-foreground">{person.company}</p>
             <a
               href={`mailto:${person.mail}`}
