@@ -1,16 +1,33 @@
 ---
 import WidgetWrapper from "./WidgetWrapper.astro";
 import Headline from "@/components/ui/Headline.astro";
+import { sanityClient } from "sanity:client";
 
 import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
 
-const images = Object.values(
-  import.meta.glob<{ default: ImageMetadata }>(
-    "/src/assets/imageGallery/*.{png,jpg,jpeg,webp}",
-    { eager: true },
-  ),
-);
+interface GalleryImage {
+  title?: string;
+  url: string;
+}
+
+const query = `*[_type == "gallery"] {
+  title,
+  "url": image.asset->url
+}`;
+
+let images = await sanityClient.fetch<GalleryImage[]>(query);
+
+//slumpa vilken bild som visas först
+const shuffleArray = (array: GalleryImage[]) => {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+};
+
+images = shuffleArray(images);
 
 export interface Props {
   title?: string;
@@ -57,9 +74,9 @@ const {
         images.map((image) => (
           // <div class="relative max-w-xl shrink-0 transition-transform duration-300 hover:scale-105 hover:z-10 cursor-pointer hover:shadow-xl">
           <div class="hover-sideways-shadow relative max-w-xl shrink-0 transition-all duration-300 hover:scale-105 hover:z-20 cursor-pointer rounded-lg">
-            <Image
-              src={image.default}
-              alt="bild från evenemang eller annan SMIL aktivitet"
+            <img
+              src={image.url}
+              alt={image.title || "Bild från SMIL aktivitet"}
               class="mx-auto w-full max-h-80 object-cover rounded-lg bg-gray-500"
             />
           </div>
@@ -72,9 +89,9 @@ const {
         images.map((image) => (
           // <div class="relative max-w-xl shrink-0 transition-transform duration-300 hover:scale-105 hover:z-10 cursor-pointer hover:shadow-2xl">
           <div class="hover-sideways-shadow relative max-w-xl shrink-0 transition-all duration-300 hover:scale-105 hover:z-20 cursor-pointer rounded-lg">
-            <Image
-              src={image.default}
-              alt="bild från evenemang eller annan SMIL aktivitet"
+            <img
+              src={image.url}
+              alt={image.title || "Bild från SMIL aktivitet"}
               class="mx-auto w-full max-h-80 object-cover rounded-lg bg-gray-500"
             />
           </div>
