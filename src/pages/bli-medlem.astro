@@ -1,0 +1,53 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Hero from "@/components/widgets/Hero.astro";
+import ContactSplit from "@/components/widgets/ContactSplit.astro";
+import PageTitle from "@/components/widgets/PageTitle.astro";
+
+const metadata = {
+  title: "404 - Page Not Found",
+  description: "The page you're looking for doesn't exist.",
+  ignoreTitleTemplate: true,
+};
+---
+
+<BaseLayout {metadata}>
+  <PageTitle title="Bli Medlem" />
+  <ContactSplit
+    title="Vad roligt att du vill bygga nätverk med oss!"
+    description={[
+      "SMIL grundades i Linköping 1985 och har sedan dess växt till ett stort nätverk av företagsledare och entreprenörer som tillsammans stärker varandra genom kontakter och erfarenhetsutbyten. Men självklart vill vi bli fler!",
+    ]}
+  >
+    <div slot="content" class="space-y-6">
+      <p class="font-bold">Som medlem kommer du få</p>
+
+      <!-- 2. DIN PUNKTLISTA -->
+      <ul class="list-disc pl-6 space-y-2 marker:text-primary">
+        <li>
+          Vara delaktig i det största företagsnätverket med kunskapsintensiva
+          företag i Linköping.
+        </li>
+        <li>
+          Delta på alla våra nätverksträffar – Pubar, Fokusgrupper och andra
+          festliga tillställningar.
+        </li>
+        <li>
+          Delta på våra populära utbildningar –Managementprogrammet och
+          Utvecklingsprogrammet.
+        </li>
+      </ul>
+
+      <p>Kostnaden för medlemskapet är 2000 kr/år per företag.</p>
+
+      <!-- 4. DIN OBS-RUTA LÄNGST NER -->
+      <div class="bg-muted/50 p-5 rounded-xl border border-border mt-8">
+        <p class="font-bold text-foreground mb-1">OBS!</p>
+        <p class="text-sm">
+          Det kan ta upp till 2 arbetsdagar för oss att behandla din ansökan. Vi
+          återkommer via e-post så fort vi har kikat på dina uppgifter.
+        </p>
+      </div>
+    </div>
+  </ContactSplit>
+</BaseLayout>
