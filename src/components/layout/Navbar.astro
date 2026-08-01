@@ -6,23 +6,30 @@ const currentPath = Astro.url.pathname;
 import { Image } from "astro:assets";
 import smilLogo from "@/assets/smil-logga.png";
 
-import { getCollection } from "astro:content";
-
 import { sanityClient } from "sanity:client";
+
+interface SanityEvent {
+  title: string;
+  date: string;
+  slug?: {
+    current: string;
+  };
+}
+
+const allEvents = await sanityClient.fetch<SanityEvent[]>(
+  `*[_type == "evenemang"]`,
+);
 
 const today = new Date();
 today.setHours(0, 0, 0, 0);
 
-const allEvents = await getCollection("evenemang");
 const sortedEvents = allEvents
-  .filter((post) => post.data.date)
-  .filter((post) => new Date(post.data.date) >= today)
-  .sort(
-    (a, b) => new Date(a.data.date).getTime() - new Date(b.data.date).getTime(),
-  );
+  .filter((post) => post.date)
+  .filter((post) => new Date(post.date) >= today)
+  .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 const eventLinks = sortedEvents.map((post) => ({
-  text: post.data.title,
-  href: `/evenemang/${post.id}`,
+  text: post.title,
+  href: `/evenemang/${post.slug?.current || ""}`,
 }));
 ---
 
