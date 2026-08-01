@@ -1,7 +1,14 @@
 ---
 import { siteConfig } from "@/config/site";
 
-const currentPath = Astro.url.pathname;
+const rawPath = Astro.url.pathname;
+
+const normalizePath = (path: string) => {
+  if (path === "/") return path;
+  return path.endsWith("/") ? path.slice(0, -1) : path;
+};
+
+const currentPath = normalizePath(rawPath);
 
 import { Image } from "astro:assets";
 import smilLogo from "@/assets/smil-logga.png";
@@ -41,7 +48,7 @@ const eventLinks = sortedEvents.map((post) => ({
   >
     <!-- max-w-7xl -->
     <div class="flex items-center gap-2">
-      <a href="/" class="<a href=/" class="transition-opacity hover:opacity-80">
+      <a href="/" class="transition-opacity hover:opacity-80">
         <Image src={smilLogo} alt="SMIL Logotyp" height={30} />
       </a>
     </div>
@@ -96,7 +103,7 @@ const eventLinks = sortedEvents.map((post) => ({
             return (
               <a
                 href={link.href}
-                class={`text-lg font-medium ${currentPath === link.href ? "underline decoration-primary decoration-2 underline-offset-8" : ""} foreground transition-colors hover:text-primary`}
+                class={`text-lg font-medium ${currentPath === normalizePath(link.href as string) ? "underline decoration-primary decoration-2 underline-offset-8" : ""} foreground transition-colors hover:text-primary`}
               >
                 {link.text}
               </a>
