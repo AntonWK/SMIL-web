@@ -23,6 +23,7 @@ let carouselImages =
   page?.carouselImages?.map((img: any) => ({
     url: urlForImage(img).url(),
     alt: img.alt || "Bild från SMIL aktivitet",
+    link: img.link || null,
   })) || [];
 
 const shuffleArray = (array: any[]) => {
