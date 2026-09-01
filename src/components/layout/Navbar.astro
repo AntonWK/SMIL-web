@@ -61,15 +61,15 @@ const eventLinks = sortedEvents.map((post) => ({
             if ("links" in link && Array.isArray(link.links)) {
               let linksToRender = link.links;
               if (link.text === "Evenemang") {
-                linksToRender = [
-                  { text: "Alla evenemang", href: "/evenemang" }, // Alltid först!
-                  ...eventLinks,
-                ];
+                linksToRender = eventLinks;
               }
 
               return (
                 <div class="relative group">
-                  <button class="flex items-center gap-1 text-lg font-medium text-foreground transition-colors hover:text-primary focus:outline-none cursor-pointer">
+                  <a
+                    href={link.href}
+                    class="flex items-center gap-1 text-lg font-medium text-foreground transition-colors hover:text-primary focus:outline-none cursor-pointer"
+                  >
                     {link.text}
                     <svg
                       class="h-4 w-4 transition-transform group-hover:rotate-180"
@@ -84,7 +84,7 @@ const eventLinks = sortedEvents.map((post) => ({
                         d="M19 9l-7 7-7-7"
                       />
                     </svg>
-                  </button>
+                  </a>
                   <div class="absolute left-0 mt-2 w-48 rounded-md border border-border bg-background shadow-lg opacity-0 invisible translate-y-1 transition-all duration-200 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 z-50">
                     <div class="py-1">
                       {linksToRender.map((sublink) => (
@@ -169,16 +169,16 @@ const eventLinks = sortedEvents.map((post) => ({
           if ("links" in link && Array.isArray(link.links)) {
             let linksToRender = link.links;
             if (link.text === "Evenemang") {
-              linksToRender = [
-                { text: "Alla evenemang", href: "/evenemang" }, // Alltid först!
-                ...eventLinks,
-              ];
+              linksToRender = eventLinks;
             }
             return (
               <div class="py-1">
-                <span class="block rounded-md px-3 py-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                <a
+                  href={link.href}
+                  class="block rounded-md px-3 py-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground"
+                >
                   {link.text}
-                </span>
+                </a>
                 <div class="mt-1 pl-4 space-y-1">
                   {linksToRender.map((sublink) => (
                     <a

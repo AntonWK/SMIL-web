@@ -19,8 +19,8 @@ export const siteConfig = {
     { text: "Hem", href: "/" },
     {
       text: "Utbildningar",
+      href: "/utbildningar",
       links: [
-        { text: "Alla utbildningar", href: "/utbildningar" },
         {
           text: "Managementprogram i retorik",
           href: "/utbildningar/managementprogram-i-retorik",
@@ -33,6 +33,7 @@ export const siteConfig = {
     },
     {
       text: "Evenemang",
+      href: "/evenemang",
       links: [],
     },
     { text: "Medlemmar", href: "/medlemmar" },
