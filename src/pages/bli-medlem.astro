@@ -1,52 +1,65 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import Hero from "@/components/widgets/Hero.astro";
 import ContactSplit from "@/components/widgets/ContactSplit.astro";
 import PageTitle from "@/components/widgets/PageTitle.astro";
+import { sanityClient } from "sanity:client";
+
+const query = `*[_type == "becomeMemberPage"][0]`;
+const page = await sanityClient.fetch(query);
 
 const metadata = {
-  title: "404 - Page Not Found",
-  description: "The page you're looking for doesn't exist.",
-  ignoreTitleTemplate: true,
+  title: "Bli medlem",
 };
 ---
 
 <BaseLayout {metadata}>
-  <PageTitle title="Bli Medlem" />
-  <ContactSplit
-    title="Vad roligt att du vill bygga nätverk med oss!"
-    description={[
-      "SMIL grundades i Linköping 1985 och har sedan dess växt till ett stort nätverk av företagsledare och entreprenörer som tillsammans stärker varandra genom kontakter och erfarenhetsutbyten. Men självklart vill vi bli fler!",
-    ]}
-  >
+  <PageTitle title={page?.title || "Bli medlem"} />
+  <ContactSplit title={page?.heading} description={page?.introText || []}>
     <div slot="content" class="space-y-6">
-      <p class="font-bold">Som medlem kommer du få</p>
+      {page?.benefitsHeading && <p class="font-bold">{page.benefitsHeading}</p>}
 
-      <!-- 2. DIN PUNKTLISTA -->
-      <ul class="list-disc pl-6 space-y-2 marker:text-primary">
-        <li>
-          Vara delaktig i det största företagsnätverket med kunskapsintensiva
-          företag i Linköping.
-        </li>
-        <li>
-          Delta på alla våra nätverksträffar – Pubar, Fokusgrupper och andra
-          festliga tillställningar.
-        </li>
-        <li>
-          Delta på våra populära utbildningar –Managementprogrammet och
-          Utvecklingsprogrammet.
-        </li>
-      </ul>
+      {
+        page?.benefitsList && page.benefitsList.length > 0 && (
+          <ul class="list-disc pl-6 space-y-2 marker:text-primary">
+            {page.benefitsList.map((item: string) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        )
+      }
+      {page?.pricingText && <p>{page.pricingText}</p>}
 
-      <p>Kostnaden för medlemskapet är 2000 kr/år per företag.</p>
+      {
+        page?.obsText && (
+          <div class="bg-muted/50 p-5 rounded-xl border border-border mt-8">
+            <p class="text-foreground mb-1">
+              <span class="font-bold text-foreground">OBS: </span>
+              {page.obsText}
+            </p>
+          </div>
+        )
+      }
+    </div>
 
-      <!-- 4. DIN OBS-RUTA LÄNGST NER -->
-      <div class="bg-muted/50 p-5 rounded-xl border border-border mt-8">
-        <p class="text-foreground mb-1">
-          <span class="font-bold text-foreground">OBS: </span>
-          Ange gärna om ni önskar fakturan på mail eller med papperspost.
-        </p>
-      </div>
+    <div class="w-full">
+      {
+        page?.formLink ? (
+          <div class="rounded-3xl bg-linear-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-xl p-4 md:p-6 group transition-all duration-300 hover:shadow-2xl hover:border-primary/40">
+            <iframe
+              src={page.formLink}
+              class="w-full min-h-[850px] border-none rounded-xl bg-transparent"
+              title="Bli medlem formulär"
+              loading="lazy"
+            >
+              Laddar formulär...
+            </iframe>
+          </div>
+        ) : (
+          <div class="p-8 text-center text-muted-foreground border-2 border-dashed rounded-xl">
+            Inget formulär inlagt i Sanity ännu.
+          </div>
+        )
+      }
     </div>
   </ContactSplit>
 </BaseLayout>

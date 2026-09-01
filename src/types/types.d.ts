@@ -18,12 +18,12 @@ export interface Feature {
 
 export type Person = {
   name: string;
-  role?: string;       // Titeln (t.ex. VD, Utvecklare)
-  company?: string;    // Företaget
+  role?: string; // Titeln (t.ex. VD, Utvecklare)
+  company?: string; // Företaget
   mail?: string;
   image?: ImageMetadata; // Stöd för både URL och Astro-bilder
   imageUrl?: string;
-}
+};
 
 export interface Service {
   title: string;
@@ -69,7 +69,7 @@ export interface FeaturesProps extends HeadlineProps {
 
 export interface ContentProps extends HeadlineProps {
   content?: string;
-  image?: ImageMetadata;
+  image?: ImageMetadata | string;
   imageAlt?: string;
   items?: Feature[];
   isReversed?: boolean;

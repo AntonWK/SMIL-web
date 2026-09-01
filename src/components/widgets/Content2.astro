@@ -1,6 +1,5 @@
 ---
 import WidgetWrapper from "./WidgetWrapper.astro";
-import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
 import Headline from "@/components/ui/Headline.astro";
 import Button from "@/components/ui/Button.astro";
@@ -24,6 +23,8 @@ const {
 } = Astro.props as ContentProps;
 
 const { container: containerClassProp = "", ...otherClasses } = classes;
+
+const imageSrc = typeof image === "string" ? image : image?.src;
 ---
 
 <WidgetWrapper
@@ -40,7 +41,9 @@ const { container: containerClassProp = "", ...otherClasses } = classes;
       <Headline
         title={title}
         subtitle={subtitle ||
-          (Array.isArray(description) ? description.join("<br /><br />") : description)}
+          (Array.isArray(description)
+            ? description.join("<br /><br />")
+            : description)}
         tagline={tagline}
         titleAs="h2"
         classes={{
@@ -119,10 +122,10 @@ const { container: containerClassProp = "", ...otherClasses } = classes;
       {
         image && (
           <div class="relative m-auto max-w-4xl">
-            <Image
-              src={image}
+            <img
+              src={imageSrc}
               alt={imageAlt}
-              class="mx-auto w-full rounded-lg bg-gray-500 shadow-lg"
+              class="mx-auto w-full rounded-lg bg-gray-500 shadow-lg object-cover"
             />
           </div>
         )

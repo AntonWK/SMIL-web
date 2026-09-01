@@ -1,10 +1,16 @@
 ---
-import { siteConfig } from "@/config/site";
-
 import { Icon } from "astro-icon/components";
+import { sanityClient } from "sanity:client";
 
-import { Image } from "astro:assets";
-import smilLogo from "@/assets/smil-logga.png";
+const query = `*[_type == "siteSettings"][0]{
+  "logoUrl": logo.asset->url,
+  footerText,
+  linkedInLink,
+  facebookLink,
+  copyrightText
+}`;
+
+const settings = await sanityClient.fetch(query);
 ---
 
 <footer class="mt-20 border-t border-border bg-card">
@@ -12,15 +18,15 @@ import smilLogo from "@/assets/smil-logga.png";
     <div class="flex flex-col items-center justify-between gap-8 md:flex-row">
       <div class="flex flex-col items-center gap-2 md:items-start">
         <span class="text-lg font-bold text-foreground">
-          <Image src={smilLogo} alt="SMIL Logotyp" height={20} />
+          <img src={settings.logoUrl} alt="SMIL Logotyp" class="h-5 w-auto" />
         </span>
         <p class="text-sm text-muted-foreground">
-          {siteConfig.description}
+          {settings.footerText}
         </p>
       </div>
       <div class="flex items-center gap-6">
         <a
-          href={siteConfig.socialLinks.facebook}
+          href={settings.facebookLink}
           target="_blank"
           rel="noopener noreferrer"
           class="text-muted-foreground transition-colors hover:text-primary"
@@ -28,7 +34,7 @@ import smilLogo from "@/assets/smil-logga.png";
           <Icon name="tabler:brand-facebook" class="h-8 w-8" />
         </a>
         <a
-          href={siteConfig.socialLinks.linkedin}
+          href={settings.linkedInLink}
           target="_blank"
           rel="noopener noreferrer"
           class="text-muted-foreground transition-colors hover:text-primary"
@@ -40,7 +46,7 @@ import smilLogo from "@/assets/smil-logga.png";
     <div
       class="mt-8 border-t border-border pt-8 text-center text-xs text-muted-foreground"
     >
-      &copy; SMIL - Företagsutveckling i Linköping.
+      &copy; {settings.copyrightText}
     </div>
   </div>
 </footer>

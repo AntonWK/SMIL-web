@@ -18,6 +18,9 @@ export async function getStaticPaths() {
     speaker,
     lastSignupDate,
     body,
+    formLink,
+    formHeight,
+    showForm,
     "slug": slug.current
   }`;
 
@@ -51,7 +54,12 @@ const {
   speaker,
   lastSignupDate,
   body,
+  formLink,
+  formHeight,
+  showForm,
 } = post.data;
+
+const isFormActive = Boolean(formLink && showForm === true);
 
 const formattedDate = date.toLocaleDateString("sv-SE", {
   year: "numeric",
@@ -85,41 +93,82 @@ const metadata = {
       url: Astro.url.href,
     }}
   />
-  <section class="relative px-4 py-8 sm:px-6 lg:px-8 md:py-12">
-    <div class="relative mx-auto max-w-3xl">
-      <div class="reveal mb-10 text-center">
-        <p class="text-sm font-semibold tracking-wide text-primary capitalize">
-          {formattedDate} • {eventType}
+  <main
+    class={`mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 ${
+      isFormActive ? "max-w-350" : "max-w-7xl"
+    }`}
+  >
+    <div
+      class={`grid grid-cols-1 ${isFormActive ? "lg:grid-cols-[1fr_500px] gap-12" : "max-w-3xl mx-auto"}`}
+    >
+      <div class="space-y-6">
+        <section class="relative px-4 py-8 sm:px-6 lg:px-8 md:py-12">
+          <div class="relative mx-auto max-w-3xl">
+            <div class="reveal mb-10 text-center">
+              <p
+                class="text-sm font-semibold tracking-wide text-primary capitalize"
+              >
+                {formattedDate} • {eventType}
 
-          {
-            startTime && (
-              <>
-                <span>• {startTime}</span>
-                {endTime && <span>- ca {endTime}</span>}
-              </>
-            )
-          }
-        </p>
-        <h1
-          class="font-heading mt-2 text-3xl font-bold leading-tight tracking-tighter text-foreground sm:text-4xl md:text-5xl"
-        >
-          {title}
-        </h1>
+                {
+                  startTime && (
+                    <>
+                      <span>• {startTime}</span>
+                      {endTime && <span>- ca {endTime}</span>}
+                    </>
+                  )
+                }
+              </p>
+              <h1
+                class="font-heading mt-2 text-3xl font-bold leading-tight tracking-tighter text-foreground sm:text-4xl md:text-5xl"
+              >
+                {title}
+              </h1>
+            </div>
+
+            {
+              image && (
+                <div class="reveal relative mb-8 h-96 w-full overflow-hidden rounded-xl shadow-lg">
+                  <img
+                    src={image}
+                    alt={title}
+                    class="h-full w-full object-cover"
+                  />
+                </div>
+              )
+            }
+
+            <div
+              class="reveal prose prose-lg dark:prose-invert mx-auto prose-headings:text-foreground prose-a:text-primary hover:prose-a:underline prose-p:text-muted-foreground prose-strong:text-foreground prose-li:text-muted-foreground prose-code:text-primary"
+            >
+              <PortableText value={body} />
+            </div>
+          </div>
+        </section>
       </div>
 
       {
-        image && (
-          <div class="reveal relative mb-8 h-96 w-full overflow-hidden rounded-xl shadow-lg">
-            <img src={image} alt={title} class="h-full w-full object-cover" />
+        isFormActive && (
+          <div class="relative pt-12 md:pt-16">
+            <div class="py-8 px-6 md:px-8 flex flex-col rounded-3xl bg-linear-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-xl relative group transition-all duration-300 hover:shadow-2xl hover:border-primary/40">
+              <div class="absolute inset-0 bg-linear-to-b from-transparent to-background/20 z-0 pointer-events-none rounded-3xl" />
+
+              <div class="relative z-10 flex flex-col">
+                <h3 class="text-xl md:text-2xl font-bold mb-6 font-heading tracking-tight">
+                  Anmälan till {title}
+                </h3>
+
+                <iframe
+                  src={formLink}
+                  class="w-full border-none rounded-xl bg-transparent"
+                  loading="lazy"
+                  style={`height: ${formHeight || 850}px;`}
+                />
+              </div>
+            </div>
           </div>
         )
       }
-
-      <div
-        class="reveal prose prose-lg dark:prose-invert mx-auto prose-headings:text-foreground prose-a:text-primary hover:prose-a:underline prose-p:text-muted-foreground prose-strong:text-foreground prose-li:text-muted-foreground prose-code:text-primary"
-      >
-        <PortableText value={body} />
-      </div>
     </div>
-  </section>
+  </main>
 </BaseLayout>

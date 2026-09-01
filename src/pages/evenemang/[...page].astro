@@ -7,19 +7,22 @@ import PostItem from "@/components/evenemang/PostItem.astro";
 import type { GetStaticPathsOptions } from "astro";
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
-  const query = `*[_type == "evenemang"] {
-    title,
-    "slug": slug.current,
-    date,
-    description,
-    eventType,
-    location,
-    "image": image.asset->url,
-    startTime,
-    endTime
+  const query = `{
+    "landing": *[_type == "eventLanding"][0],
+    "sanityEvents": *[_type == "evenemang"] {
+      title,
+      "slug": slug.current,
+      date,
+      description,
+      eventType,
+      location,
+      "image": image.asset->url,
+      startTime,
+      endTime
+    }
   }`;
 
-  const sanityEvents = await sanityClient.fetch(query);
+  const { landing, sanityEvents } = await sanityClient.fetch(query);
 
   // Mappa om så det matchar din befintliga struktur med .data
   const evenemangEntries = sanityEvents.map((event: any) => ({
@@ -40,14 +43,17 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
     .filter((post: any) => new Date(post.data.date) >= today) // Visa bara framtida datum
     .sort((a: any, b: any) => a.data.date.valueOf() - b.data.date.valueOf());
 
-  return paginate(sortedPosts, { pageSize: 6 });
+  return paginate(sortedPosts, {
+    pageSize: 6,
+    props: { landing },
+  });
 }
 
-const { page } = Astro.props;
+const { page, landing } = Astro.props;
 const evenemang = page.data;
 
 const metadata = {
-  title: "evenemang",
+  title: "Evenemang",
   description: "Latest news and updates from our team.",
 };
 ---
@@ -62,9 +68,9 @@ const metadata = {
     </div>
     <div class="relative mx-auto max-w-5xl">
       <Headline
-        tagline="Nätverksträffar"
-        title="Evenemang"
-        subtitle="Smil arrangerar normalt medlemsträffar första torsdagkvällen i månaden. Nedan finner du en lista över de närmaste och mer information om varje träff kan hittas i menyn ovan eller genom att klicka på rubriken."
+        tagline={landing?.overline}
+        title={landing?.title}
+        subtitle={landing?.description}
         classes={{
           container: "reveal mb-12 text-center",
           title:

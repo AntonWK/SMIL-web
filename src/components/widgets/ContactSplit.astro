@@ -87,59 +87,7 @@ const { container: containerClassProp = "", ...otherClasses } = classes;
       {/* Slot before items if not isAfterContent */}
       {!isAfterContent && <slot />}
 
-      <div class="self-start w-full">
-        <!-- placeholder för formulär -->
-        <div
-          class="bg-muted/30 p-6 md:p-8 rounded-2xl border border-border shadow-sm"
-        >
-          <h3 class="text-2xl font-bold mb-6">Skicka ett meddelande</h3>
-
-          <form action="#" class="space-y-4" onsubmit="event.preventDefault()">
-            <div>
-              <label class="block text-sm font-medium mb-1 opacity-70"
-                >Namn (Kommande funktion)</label
-              >
-              <input
-                disabled
-                type="text"
-                class="w-full rounded-xl border-border bg-muted/50 px-4 py-3 opacity-50 cursor-not-allowed"
-                placeholder="Ditt namn..."
-              />
-            </div>
-            <div>
-              <label class="block text-sm font-medium mb-1 opacity-70"
-                >E-post (Kommande funktion)</label
-              >
-              <input
-                disabled
-                type="email"
-                class="w-full rounded-xl border-border bg-muted/50 px-4 py-3 opacity-50 cursor-not-allowed"
-                placeholder="din@epost.se"
-              />
-            </div>
-            <div>
-              <label class="block text-sm font-medium mb-1 opacity-70"
-                >Meddelande</label
-              >
-              <textarea
-                disabled
-                rows="4"
-                class="w-full rounded-xl border-border bg-muted/50 px-4 py-3 opacity-50 cursor-not-allowed resize-none"
-                placeholder="Skriv ditt ärende här..."></textarea>
-            </div>
-            <div class="pt-2">
-              <Button
-                type="button"
-                variant="primary"
-                class="w-full opacity-60 cursor-not-allowed"
-              >
-                Skicka meddelande
-              </Button>
-            </div>
-          </form>
-        </div>
-        <!-- placeholder för formulär end -->
-      </div>
+      <div class="self-start w-full"></div>
       {isAfterContent && <slot />}
     </div>
   </div>

@@ -6,14 +6,36 @@ import Features from "@/components/widgets/Features.astro";
 import Content2 from "@/components/widgets/Content2.astro";
 import ImageCarousel from "@/components/widgets/ImageCarousel.astro";
 import AnimatedCTA from "@/components/widgets/AnimatedCTA.astro";
+
 const metadata = {
   title: `${siteConfig.name} — Nätverk och företagsutveckling i Linköping`,
   description: siteConfig.description,
   ignoreTitleTemplate: true,
 };
 
-import smilBanner from "@/assets/smil-banner-utvp.png";
-import smil40 from "@/assets/smil-40.png";
+import { sanityClient } from "sanity:client";
+import { urlForImage } from "@/utils/image";
+
+const query = `*[_type == "homepage"][0]`;
+const page = await sanityClient.fetch(query);
+
+let carouselImages =
+  page?.carouselImages?.map((img: any) => ({
+    url: urlForImage(img).url(),
+    alt: img.alt || "Bild från SMIL aktivitet",
+  })) || [];
+
+const shuffleArray = (array: any[]) => {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+};
+
+if (page?.shuffleCarousel) {
+  carouselImages = shuffleArray(carouselImages);
+}
 ---
 
 <BaseLayout {metadata}>
@@ -21,127 +43,87 @@ import smil40 from "@/assets/smil-40.png";
     title="VÄLKOMMEN TILL SMIL"
     subtitle="Linköpings nätverk för företagsledare och entreprenörer"
     bgImage={{
-      src: smilBanner,
+      src: urlForImage(page.heroImage).url(),
       alt: "SMIL Banner",
     }}
     description={`${siteConfig.description}`}
-    actions={[
-      {
-        text: "Om SMIL",
-        href: "/om-smil",
-        variant: "secondary",
-        icon: "lucide:smile",
-        ariaLabel: "Om SMIL - Information om oss",
-      },
-      {
-        text: "Bli medlem idag!",
-        href: "/bli-medlem",
-        variant: "primary",
-        icon: "lucide:user-plus",
-        ariaLabel: "Bli medlem idag! - Länk till medlemskapsformulär",
-      },
-    ]}
+    actions={page.heroButtons?.map((btn: any) => ({
+      text: btn.text,
+      href: btn.href,
+      variant: btn.variant,
+      icon: btn.variant === "primary" ? "lucide:user-plus" : "lucide:smile",
+    })) || []}
   />
   <Features
-    tagline="Väx med SMIL"
-    title="Vårt erbjudande"
-    subtitle="SMIL erbjuder flertal möjligheter för företag att utväcklas oavsätt storlek!"
+    tagline={page.infoOverline}
+    title={page.infoTitle}
+    subtitle={page.infoDescription}
     features={[
       {
-        title: "Evenemang",
-        description:
-          "Delta i allt från inspirerande gästföreläsningar och givande medlemsträffar till avslappnat häng på våra SMIL-pubar.",
+        title: page.cardOne.title,
+        description: page.cardOne.description,
         icon: "lucide:calendar-days",
         iconClass: "bg-primary/10 text-primary",
       },
       {
-        title: "Utbildningsprogram",
-        description:
-          "Ta nästa steg och utveckla ditt bolag i tätt samarbete och erfarenhetsutbyte med andra drivna företagsledare.",
+        title: page.cardTwo.title,
+        description: page.cardTwo.description,
         icon: "lucide:book-open",
         iconClass: "bg-primary/10 text-primary",
       },
       {
-        title: "Nätvärkande med liksinta företagsledare",
-        description:
-          "Skapa värdefulla relationer i Linköpings mest engagerade och stöttande nätverk för företagsledare.",
+        title: page.cardThree.title,
+        description: page.cardThree.description,
         icon: "lucide:network",
         iconClass: "bg-primary/10 text-primary",
       },
     ]}
   />
-  <Content2 image={smil40} imageAlt="Development">
+  <Content2
+    image={urlForImage(page.sloganImage).url()}
+    imageAlt={page.sloganImage?.alt || "Development"}
+  >
     <Fragment>
-      <h3 class="text-2xl font-bold tracking-tight sm:text-3xl mb-2">
-        AV ENTREPRENÖRER, <br />
-        FÖR ENTREPRENÖRER
+      <h3
+        class="text-2xl font-bold tracking-tight sm:text-3xl mb-2 whitespace-pre-line"
+      >
+        {page.sloganTitle}
       </h3>
 
       <div class="w-24 h-1 bg-primary rounded-full mb-6"></div>
-
-      <p class="text-lg text-muted-foreground">
-        <p>
-          <p class="text-lg text-muted-foreground mb-4">
-            Vi tror på <strong>låga trösklar</strong> och <strong
-              >högt i tak</strong
-            >.
-          </p>
-
-          <p class="text-lg text-muted-foreground mb-4">
-            Vi tror att <strong>möten</strong> med andra människor <strong
-              >berikar</strong
-            > oss.
-          </p>
-
-          <p class="text-lg text-muted-foreground">
-            Vi tror att <strong>tillsammans</strong> kan vi <strong
-              >bli klokare</strong
-            > än vad vi kan åstadkomma själva.
-          </p>
-        </p>
-      </p>
+      <div class="space-y-4 text-lg text-muted-foreground">
+        {
+          page.sloganText?.map((block: any) => (
+            <p>
+              {block.children?.map((child: any) =>
+                child.marks?.includes("strong") ? (
+                  <strong>{child.text}</strong>
+                ) : (
+                  child.text
+                ),
+              )}
+            </p>
+          ))
+        }
+      </div>
     </Fragment>
   </Content2>
 
   <ImageCarousel
-    title="Våra evenemang"
-    subtitle="Vi anordnar flera olika typer av nätverksträffar och utbildningar"
-    testImages={[
-      {
-        src: smilBanner,
-        alt: "SMIL Banner",
-      },
-      {
-        src: smil40,
-        alt: "SMIL 40",
-      },
-      {
-        src: smil40,
-        alt: "SMIL 40",
-      },
-    ]}
+    title={page?.carouselTitle}
+    subtitle={page?.carouselSubtitle}
+    images={carouselImages}
   />
 
   <AnimatedCTA
-    title="Bli en del av nätverket!"
-    paragraphs={[
-      "Syftet med SMIL är att främja företagsutvecklingen i Linköping och att skapa engagemang kring frågor som rör entreprenörskap.",
-      "Som medlem hos oss får du tillgång till ett stort nätverk med företagsledare i Linköping. Vi anordnar flera olika typer av nätverksträffar och utbildningar under året där man har möjlighet att dela erfarenheter och knyta nya affärskontakter. Vi vill skapa de bästa förutsättningarna för våra medlemmar att utveckla sitt ledarskap och företagande.",
-      "Tillsammans skapar vi en av Europas bästa och mest kreativa entreprenörs- och innovationsmiljöer.",
-    ]}
-    actions={[
-      {
-        text: "Utforska evenemang",
-        href: "/evenemang",
-        variant: "secondary",
-        icon: "lucide:calendar-days",
-      },
-      {
-        text: "Bli medlem",
-        href: "/bli-medlem",
-        variant: "primary",
-        icon: "lucide:user-plus",
-      },
-    ]}
+    title={page.endTitle}
+    paragraphs={page.textList}
+    actions={page.endButtons?.map((btn: any) => ({
+      text: btn.text,
+      href: btn.href,
+      variant: btn.variant,
+      icon:
+        btn.variant === "primary" ? "lucide:user-plus" : "lucide:calendar-days",
+    })) || []}
   />
 </BaseLayout>

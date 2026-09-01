@@ -1,9 +1,7 @@
 ---
 import Headline from "@/components/ui/Headline.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import Content from "@/components/widgets/Content2.astro";
 import PageTitle from "@/components/widgets/PageTitle.astro";
-import Content2 from "@/components/widgets/Content2.astro";
 
 import { Image } from "astro:assets";
 import utvp from "@/assets/utvp-bild.png";
@@ -11,9 +9,13 @@ import WidgetWrapper from "@/components/widgets/WidgetWrapper.astro";
 import Button from "@/components/ui/Button.astro";
 
 import { Icon } from "astro-icon/components";
+
+const metadata = {
+  title: "Utbildningar",
+};
 ---
 
-<BaseLayout>
+<BaseLayout metadata={metadata}>
   <PageTitle title="Utbildningar" />
   <WidgetWrapper
     containerClass="max-w-5xl mx-auto p-8 md:p-12 mb-12 rounded-[2.5rem] shadow-xl border border-black/5 bg-primary/5 relative"

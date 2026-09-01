@@ -2,7 +2,7 @@ import ogImage from "@/assets/og-image.png";
 import { text } from "node:stream/consumers";
 
 export const siteConfig = {
-  name: "Smil",
+  name: "SMIL",
   description:
     "Utveckla ditt företag och ledarskap med SMIL i Linköping. Få tillgång till ett unikt nätverk, givande utbildningar och värdefulla affärskontakter.",
   url: "https://smil.se",

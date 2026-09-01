@@ -38,6 +38,12 @@ const eventLinks = sortedEvents.map((post) => ({
   text: post.title,
   href: `/evenemang/${post.slug?.current || ""}`,
 }));
+
+const query = `*[_type == "siteSettings"][0]{
+  "logoUrl": logo.asset->url,
+}`;
+
+const settings = await sanityClient.fetch(query);
 ---
 
 <nav
@@ -49,7 +55,7 @@ const eventLinks = sortedEvents.map((post) => ({
     <!-- max-w-7xl -->
     <div class="flex items-center gap-2">
       <a href="/" class="transition-opacity hover:opacity-80">
-        <Image src={smilLogo} alt="SMIL Logotyp" height={30} />
+        <img src={settings.logoUrl} alt="SMIL Logotyp" class="h-8 w-auto" />
       </a>
     </div>
 
