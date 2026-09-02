@@ -37,7 +37,7 @@ const tabs = [...activeLetters];
       activeLetters.map((letter) => (
         <a
           href={`#bokstav-${letter}`}
-          class="border bg-white border-gray-300 dark:border-slate-700 bg-page px-4 py-2 rounded-md hover:border-primary hover:text-primary transition-colors text-lg font-medium"
+          class="inline-block border bg-white border-gray-300 dark:border-slate-700 bg-page px-4 py-2 rounded-md transition-all duration-300 hover:scale-115 hover:border-primary hover:text-primary origin-center text-lg font-medium"
         >
           {letter}
         </a>
@@ -59,7 +59,7 @@ const tabs = [...activeLetters];
             {groupedMembers[letter].map((member) =>
               member.url ? (
                 <a
-                  class="text-lg underline decoration-primary decoration-2 underline-offset-4 hover:text-primary transition-colors"
+                  class="inline-block w-fit text-lg underline decoration-primary decoration-2 underline-offset-4 transition-all duration-300 hover:scale-105 origin-left hover:text-primary"
                   href={member.url}
                   target="_blank"
                   rel="noopener noreferrer"
