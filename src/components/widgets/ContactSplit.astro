@@ -44,10 +44,7 @@ const { container: containerClassProp = "", ...otherClasses } = classes;
     >
       <Headline
         title={title}
-        subtitle={subtitle ||
-          (Array.isArray(description)
-            ? description.join("<br /><br />")
-            : description)}
+        subtitle={subtitle}
         tagline={tagline}
         titleAs="h2"
         classes={{
@@ -57,6 +54,23 @@ const { container: containerClassProp = "", ...otherClasses } = classes;
           subtitle: "text-lg text-muted-foreground",
         }}
       />
+
+      {
+        /* Hanterar både en vanlig sträng OCH om den får en array av strängar från andra sidor */
+      }
+      {
+        description && description.length > 0 && (
+          <div
+            class="mb-8 text-lg text-muted-foreground space-y-4"
+            set:html={
+              Array.isArray(description)
+                ? description.join("<br /><br />")
+                : description
+            }
+          />
+        )
+      }
+
       <div class="mb-8 text-lg text-muted-foreground">
         <slot name="content" />
       </div>

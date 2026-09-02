@@ -1,0 +1,161 @@
+---
+import ContactSplit from "@/components/widgets/ContactSplit.astro";
+import PageTitle from "@/components/widgets/PageTitle.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { sanityClient } from "sanity:client";
+import { toHTML } from "@portabletext/to-html";
+import { urlForImage } from "@/utils/image";
+
+const query = `*[_type == "developmentProgram"][0]`;
+const page = await sanityClient.fetch(query);
+---
+
+<BaseLayout metadata={{ title: "Utvecklingsprogrammet" }}>
+  <PageTitle title={page?.title} />
+  <ContactSplit
+    title={page?.introTitle}
+    description={page?.introText ? toHTML(page.introText) : ""}
+  >
+    <div slot="content" class="space-y-6">
+      {page?.benefitsHeading && <p class="font-bold">{page.benefitsHeading}</p>}
+
+      {
+        page?.benefitsList && page.benefitsList.length > 0 && (
+          <ul class="list-disc pl-6 space-y-2 marker:text-primary">
+            {page.benefitsList.map((item: any) => (
+              <li>
+                <strong>{item.heading}</strong>
+                {item.description && <span>– {item.description}</span>}
+              </li>
+            ))}
+          </ul>
+        )
+      }
+      {page?.pricingText && <p>{page.pricingText}</p>}
+
+      {
+        page?.testimonialHeading && (
+          <p class="font-bold mt-8">{page.testimonialHeading}</p>
+        )
+      }
+
+      {page?.testimonialText && <div set:html={toHTML(page.testimonialText)} />}
+
+      {
+        page?.testimonialImage && (
+          <img
+            src={urlForImage(page.testimonialImage).url()}
+            alt={page.testimonialImage.alt || "Testimonial image"}
+            class="rounded-xl shadow-lg mt-4"
+          />
+        )
+      }
+
+      {
+        page?.brochureCta?.url && (
+          <p class="mt-4">
+            {page.brochureCta.preText}{" "}
+            <a
+              href={page.brochureCta.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="underline underline-offset-4 decoration-primary decoration-1 transition-all duration-300 hover:text-primary inline-block hover:scale-105 origin-left"
+            >
+              {page.brochureCta.linkText}
+            </a>
+          </p>
+        )
+      }
+
+      <h2 class="text-3xl md:text-4xl font-bold font-heading mt-12 mb-6">
+        {page?.executionHeading || "Programmets genomförande"}
+      </h2>
+
+      {
+        page?.executionText && (
+          <div
+            class="space-y-4 text-lg text-muted-foreground"
+            set:html={toHTML(page.executionText)}
+          />
+        )
+      }
+
+      {
+        page?.leadersImage && (
+          <img
+            src={urlForImage(page.leadersImage).url()}
+            alt={page.leadersImage.alt || "Testimonial image"}
+            class="rounded-xl shadow-lg mt-4"
+          />
+        )
+      }
+
+      <h2 class="text-3xl md:text-4xl font-bold font-heading mt-12 mb-6">
+        {page?.datesAndTermsTitle || "Datum och villkor"}
+      </h2>
+
+      {
+        page?.datesAndTerms && (
+          <div
+            class="space-y-4 text-lg text-muted-foreground"
+            set:html={toHTML(page.datesAndTerms)}
+          />
+        )
+      }
+
+      <h2 class="text-3xl md:text-4xl font-bold font-heading mt-12 mb-6">
+        {page?.contactInfoTitle || "Kontakt och mer info"}
+      </h2>
+
+      {
+        page?.contactInfo && (
+          <div
+            class="space-y-4 text-lg text-muted-foreground [&_a]:font-medium [&_a]:underline [&_a]:decoration-primary [&_a]:underline-offset-4 [&_a]:decoration-1 [&_a]:transition-all [&_a]:duration-300 [&_a]:inline-block [&_a:hover]:text-primary [&_a:hover]:scale-105 [&_a]:origin-left"
+            set:html={toHTML(page.contactInfo)}
+          />
+        )
+      }
+    </div>
+
+    <div class="w-full">
+      {
+        page?.formLink ? (
+          <div class="rounded-3xl bg-linear-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-xl p-4 md:p-6 group transition-all duration-300 hover:shadow-2xl hover:border-primary/40">
+            <iframe
+              src={page.formLink}
+              class="w-full min-h-[1100px] border-none rounded-xl bg-transparent"
+              title="Bli medlem formulär"
+              loading="lazy"
+            >
+              Laddar formulär...
+            </iframe>
+          </div>
+        ) : (
+          <div class="p-8 text-center text-muted-foreground border-2 border-dashed rounded-xl">
+            Inget formulär inlagt i Sanity ännu.
+          </div>
+        )
+      }
+    </div>
+  </ContactSplit>
+
+  {
+    page?.bottomImageGallery && page.bottomImageGallery.length > 0 && (
+      <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+        <div
+          class={`grid grid-cols-1 sm:grid-cols-${page.bottomColumns || 2} gap-8`}
+        >
+          {page.bottomImageGallery.map((image: any) => (
+            <img
+              src={urlForImage(image).url()}
+              alt={image.alt || "Bild på deltagare"}
+              title={image.title || ""}
+              class="w-full h-auto rounded-2xl shadow-xl object-cover hover:shadow-2xl transition-shadow duration-300"
+              loading="lazy"
+            />
+          ))}
+        </div>
+      </section>
+    )
+  }
+</BaseLayout>

@@ -24,6 +24,7 @@
     "@astrojs/sitemap": "^3.7.3",
     "@iconify-json/lucide": "^1.2.111",
     "@iconify-json/tabler": "^1.2.35",
+    "@portabletext/to-html": "^6.0.0",
     "@sanity/astro": "^3.5.0",
     "@sanity/client": "^7.24.0",
     "@sanity/image-url": "^2.1.1",

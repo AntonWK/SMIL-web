@@ -1,0 +1,106 @@
+---
+import Headline from "@/components/ui/Headline.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import PageTitle from "@/components/widgets/PageTitle.astro";
+
+import { Image } from "astro:assets";
+import WidgetWrapper from "@/components/widgets/WidgetWrapper.astro";
+import Button from "@/components/ui/Button.astro";
+
+import { Icon } from "astro-icon/components";
+import { sanityClient } from "sanity:client";
+import { toHTML } from "@portabletext/to-html";
+import { urlForImage } from "@/utils/image";
+
+const query = `{
+  "dev": *[_type == "developmentProgram"][0],
+  "rhetoric": *[_type == "rhetoricProgram"][0]
+}`;
+const data = await sanityClient.fetch(query);
+
+const devPage = data.dev;
+const rhetoricPage = data.rhetoric;
+
+const metadata = {
+  title: "Utbildningar",
+};
+---
+
+<BaseLayout metadata={metadata}>
+  <PageTitle title="Utbildningar" />
+  <WidgetWrapper
+    containerClass="max-w-5xl mx-auto p-8 md:p-12 mb-12 rounded-[2.5rem] bg-linear-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-xl group transition-all duration-300 hover:shadow-2xl hover:border-primary/40 relative"
+  >
+    <Headline
+      title={devPage?.previewHeading || "Utvecklingsprogrammet"}
+      subtitle={devPage?.previewText || "Fallback-text här..."}
+      classes={{
+        container: "mb-8",
+        title:
+          "text-4xl md:text-5xl font-bold tracking-tighter mb-4 font-heading",
+        subtitle: "text-2xl text-muted-foreground",
+      }}
+    />
+
+    {
+      devPage?.previewImage ? (
+        <img
+          src={urlForImage(devPage.previewImage).url()}
+          alt={devPage.previewImage.alt || "Utvecklingsprogrammet bild"}
+          class="mx-auto w-full rounded-lg bg-gray-500 shadow-lg object-cover"
+          loading="lazy"
+        />
+      ) : (
+        <div class="mx-auto w-full rounded-lg bg-gray-500 shadow-lg h-64 flex items-center justify-center">
+          <span class="text-white text-lg">Ingen bild tillgänglig</span>
+        </div>
+      )
+    }
+
+    <Button
+      href="/utbildningar/utvecklingsprogrammet"
+      variant="primary"
+      size="lg"
+      class="mt-6"
+    >
+      <Icon name="lucide:trending-up" class="w-5 h-5 mr-2" />
+      {devPage?.previewButtonText || "Läs mer om programmet"}
+    </Button>
+  </WidgetWrapper>
+
+  <WidgetWrapper
+    containerClass="max-w-5xl mx-auto p-8 md:p-12 mb-12 rounded-[2.5rem] bg-linear-to-br from-primary/10 via-primary/5 to-background border border-primary/20 shadow-xl group transition-all duration-300 hover:shadow-2xl hover:border-primary/40 relative"
+  >
+    <Headline
+      title={rhetoricPage?.previewHeading || "Retorikprogrammet"}
+      subtitle={rhetoricPage?.previewText || "Laddar text..."}
+      classes={{
+        container: "mb-8",
+        title:
+          "text-4xl md:text-5xl font-bold tracking-tighter mb-4 font-heading",
+        subtitle: "text-2xl text-muted-foreground",
+      }}
+    />
+
+    {
+      rhetoricPage?.previewImage && (
+        <img
+          src={urlForImage(rhetoricPage.previewImage).url()}
+          alt={rhetoricPage.previewImage.alt || "Retorikprogrammet bild"}
+          class="mx-auto w-full rounded-lg bg-gray-500 shadow-lg object-cover"
+          loading="lazy"
+        />
+      )
+    }
+
+    <Button
+      href="/utbildningar/managementprogram-i-retorik"
+      variant="primary"
+      size="lg"
+      class="mt-6 transition-all duration-300 hover:scale-105"
+    >
+      <Icon name="lucide:presentation" class="w-5 h-5 mr-2" />
+      {rhetoricPage?.previewButtonText || "Läs mer om programmet"}
+    </Button>
+  </WidgetWrapper>
+</BaseLayout>
