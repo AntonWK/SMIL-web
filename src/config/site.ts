@@ -22,12 +22,12 @@ export const siteConfig = {
       href: "/utbildningar",
       links: [
         {
-          text: "Managementprogram i retorik",
-          href: "/utbildningar/managementprogram-i-retorik",
-        },
-        {
           text: "Utvecklingsprogrammet",
           href: "/utbildningar/utvecklingsprogrammet",
+        },
+        {
+          text: "Managementprogram i retorik",
+          href: "/utbildningar/managementprogram-i-retorik",
         },
       ],
     },

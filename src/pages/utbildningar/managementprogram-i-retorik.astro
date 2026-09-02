@@ -36,7 +36,7 @@ const activeAspect =
     {
       page?.introText && (
         <div
-          class="text-xl font-normal text-muted-foreground w-full space-y-6 [&_a]:font-medium [&_a]:underline [&_a]:decoration-primary [&_a]:underline-offset-4 [&_a]:decoration-1 [&_a]:transition-all [&_a]:duration-300 [&_a]:inline-block [&_a:hover]:text-primary [&_a:hover]:scale-105 [&_a]:origin-left"
+          class="text-xl font-normal text-muted-foreground w-full space-y-6 [&_a]:font-bold [&_a]:underline [&_a]:decoration-primary [&_a]:underline-offset-4 [&_a]:decoration-1 [&_a]:transition-all [&_a]:duration-300 [&_a]:inline-block [&_a:hover]:text-primary [&_a:hover]:scale-105 [&_a]:origin-center"
           set:html={toHTML(page.introText)}
         />
       )
@@ -54,7 +54,7 @@ const activeAspect =
             [&_strong]:font-bold [&_strong]:text-foreground 
             [&_ul]:list-disc [&_ul]:ml-6 [&_ul]:mb-6 [&_ul]:space-y-2 [&_li::marker]:text-primary
             [&_ol]:list-decimal [&_ol]:ml-6 [&_ol]:mb-6 [&_ol]:space-y-3 [&_ol_li::marker]:text-primary [&_ol_li::marker]:font-bold
-            [&_a]:font-medium [&_a]:underline [&_a]:decoration-primary [&_a]:underline-offset-4 [&_a]:decoration-1 [&_a]:transition-all [&_a]:duration-300 [&_a:hover]:text-primary"
+            [&_a]:font-medium [&_a]:underline [&_a]:decoration-primary [&_a]:underline-offset-4 [&_a]:decoration-1 [&_a]:transition-all [&_a]:duration-300 [&_a]:inline-block [&_a:hover]:text-primary [&_a:hover]:scale-105 [&_a]:origin-center"
             set:html={toHTML(page.mainContent)}
           />
         )

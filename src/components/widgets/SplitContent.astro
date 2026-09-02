@@ -127,7 +127,7 @@ const { container: containerClassProp = "", ...otherClasses } = classes;
                       {mail && (
                         <a
                           href={`mailto:${mail}`}
-                          class="block mt-2 text-muted-foreground underline decoration-primary decoration-1 underline-offset-4 font-medium hover:text-primary"
+                          class="block mt-2 text-muted-foreground underline decoration-primary !decoration-1 !origin-center underline-offset-4 font-medium hover-link"
                         >
                           {mail}
                         </a>
