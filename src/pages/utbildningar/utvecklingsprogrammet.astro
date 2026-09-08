@@ -110,7 +110,7 @@ const page = await sanityClient.fetch(query);
       {
         page?.contactInfo && (
           <div
-            class="space-y-4 text-lg text-muted-foreground [&_a]:font-medium [&_a]:underline [&_a]:decoration-primary [&_a]:underline-offset-4 [&_a]:decoration-1 [&_a]:transition-all [&_a]:duration-300 [&_a]:inline-block [&_a:hover]:text-primary [&_a:hover]:scale-105 [&_a]:origin-left"
+            class="space-y-4 text-lg text-muted-foreground [&_a]:font-medium [&_a]:underline [&_a]:decoration-primary [&_a]:underline-offset-4 [&_a]:decoration-1 [&_a]:transition-all [&_a]:duration-300 [&_a]:inline-block [&_a:hover]:text-secondary"
             set:html={toHTML(page.contactInfo)}
           />
         )

@@ -7,6 +7,7 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
   --color-border: var(--border);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
@@ -17,6 +18,7 @@
   --background: #ffffff;
   --foreground: #0a0a0a;
   --primary: #f7b01a;
+  --secondary: #0498ab;
   --border: #e5e7eb;
   --muted: #f4f4f5;
   --muted-foreground: #52525b;
@@ -27,6 +29,7 @@
   --background: #030303;
   --foreground: #e5e7eb;
   --primary: #8bbcff;
+  --secondary: #0498ab;
   --border: #262626;
   --muted: #171717;
   --muted-foreground: #a1a1aa;
@@ -47,7 +50,7 @@
 }
 
 .hover-link {
-  @apply inline-block w-fit underline decoration-primary decoration-2 underline-offset-4 transition-all duration-300 hover:scale-105 hover:text-primary origin-left;
+  @apply inline-block w-fit underline decoration-primary decoration-2 underline-offset-4 transition-all duration-300 hover:text-secondary origin-left;
 }
 
 /* Animations - Reveal on Scroll */
