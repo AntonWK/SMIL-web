@@ -50,7 +50,7 @@
 }
 
 .hover-link {
-  @apply inline-block w-fit underline decoration-primary decoration-2 underline-offset-4 transition-all duration-300 hover:text-secondary origin-left;
+  @apply inline-block w-fit underline decoration-primary decoration-2 underline-offset-4 transition-all duration-300 hover:decoration-secondary;
 }
 
 /* Animations - Reveal on Scroll */
